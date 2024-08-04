@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for a beauty therapy website, featuring user management, appointment booking, therapist scheduling, and content management. Built with Node.js, Express, MongoDB, and Firestore for image storage.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trinitynataly/beauty-therapy.git"
+  },
+  "keywords": [
+    "beauty",
+    "therapy",
+    "store",
+    "massage"
+  ],
+  "author": "Natalia Pakhomova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trinitynataly/beauty-therapy/issues"
+  },
+  "homepage": "https://github.com/trinitynataly/beauty-therapy#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.3.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.2"
+  }
+}
