@@ -1,7 +1,7 @@
 /*
-Version: 1.0
+Version: 1.1
 Last edited by: Natalia Pakhomova
-Last edit date: 04/08/2024
+Last edit date: 0/08/2024
 Main application file for initializing and configuring the Express server.
 */
 
@@ -9,26 +9,25 @@ Main application file for initializing and configuring the Express server.
 const express = require('express');
 // Import dotenv for environment variable management
 const dotenv = require('dotenv');
-// Import the function to connect to MongoDB
-const connectDB = require('./config/db');
 // Import the function to initialize Firebase
 const { initializeFirebase } = require('./config/firebase');
+
+// Load environment variables from .env file, if it exists
+dotenv.config();
+
+// Initialize Firebase
+initializeFirebase();
+
 // Import the authentication routes
 const authRoutes = require('./routes/authRoutes');
 // Import the user routes
 const userRoutes = require('./routes/userRoutes');
 
-// Load environment variables from .env file, if it exists
-dotenv.config();
 
 // Read the SERVER_NAME environment variable or use 'localhost' as the default
 const SERVER_NAME = process.env.SERVER_NAME || 'localhost';
 
-// Connect to MongoDB
-connectDB();
 
-// Initialize Firebase
-initializeFirebase();
 
 // Create an Express application
 const app = express();

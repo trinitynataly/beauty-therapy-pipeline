@@ -1,9 +1,18 @@
 /*
-Version: 1.1
+Version: 1.2
 Last edited by: Natalia Pakhomova
-Last edit date: 04/08/2024
+Last edit date: 06/08/2024
 Controller functions for user registration and login, including validation and token generation.
 */
+
+// Import the Firestore instance
+const admin = require('firebase-admin');
+// Create a new Firestore client
+const db = admin.firestore();
+// Import the authentication helper functions
+const { generateTokens, verifyPassword, verifyToken, hashPassword } = require('../utils/auth');
+// Import the authentication validation schemas
+const { registerSchema, loginSchema } = require('../validations');
 
 /**
  * Register a new user with email and password.
@@ -11,47 +20,53 @@ Controller functions for user registration and login, including validation and t
  * @param {object} res - the response object
  * @returns {object} - the success message
 */
-const User = require('../models/user');
-// Import the authentication helper functions
-const { generateTokens, verifyPassword, verifyToken } = require('../utils/auth');
-// Import the authentication validation schemas
-const { registerSchema, loginSchema } = require('../validations');
-
-// Register a new user
 const register = async (req, res) => {
   // Validate the request body against the register schema
-  const { error } = registerSchema.validate(req.body);
+  const {value, error } = registerSchema.validate(req.body);
   // Check if there are any validation errors
   if (error) {
     // Return an error response
     return res.status(400).json({ error: error.details[0].message });
   }
 
+  console.log(value);
+
   // Decompose the request body into individual fields
-  const { email, password, firstName, lastName, dob, gender, phone, street, suburb, postcode, state, country } = req.body;
+  const { email, password, firstName, lastName, dob, gender, phone, street, suburb, postcode, state, country } = value;
   // Try for any errors
   try {
     // Check if the email already exists
-    const existingUser = await User.findOne({ email });
+    const userRef = db.collection('users').doc(email);
+    // Get the user document from Firestore
+    const userDoc = await userRef.get();
     // If the user exists
-    if (existingUser) {
+    if (userDoc.exists) {
       // Return an error response
       return res.status(400).json({ error: 'Email already exists' });
     }
 
+    // hash the password
+    const hashedPassword = await hashPassword(password);
+
     // Create a new user object
-    const user = new User({
-      email, // Assign the email
-      password, // Assign the password
-      firstName, // Assign the first name
-      lastName, // Assign the last name
-      dob, // Assign the date of birth
-      gender, // Assign the gender
-      phone, // Assign the phone number
-      address: { street, suburb, postcode, state, country } // Assign the address
-    });
+    const user = {
+      email, // user email
+      password: hashedPassword, // hashed password
+      firstName, // user first name
+      lastName, // user last name
+      dob, // user date of birth
+      gender, // user gender
+      phone, // user phone number
+      address: { street, suburb, postcode, state, country }, // user address
+      isAdmin: false, // user is not an admin
+      isActive: true, // user is active
+      stripeToken: '', // user stripe token
+      createdAt: new Date().toISOString(), // user creation date
+      updatedAt: new Date().toISOString() // user update date
+    };
+
     // Save the user to the database
-    await user.save();
+    await userRef.set(user);
     // Remove the password from the user object
     user.password = undefined;
     // Generate tokens for the user
@@ -84,14 +99,16 @@ const login = async (req, res) => {
   // Try for any errors
   try {
     // Find the user by email
-    const user = await User.findOne({ email });
+    const userRef = db.collection('users').doc(email);
+    // Get the user document from Firestore
+    const userDoc = await userRef.get();
     // Check if the user exists and the password matches
-    if (!user || !(await verifyPassword(password, user.password))) {
+    if (!userDoc.exists || !(await verifyPassword(password, userDoc.data().password))) {
       // Return an error response
       return res.status(401).json({ message: 'Invalid email or password' });
     }
     // Generate tokens for the user
-    const tokens = generateTokens(user);
+    const tokens = generateTokens(userDoc.data());
     // Return the tokens
     res.json(tokens);
   } catch (error) { // Catch any errors
@@ -118,24 +135,26 @@ const refreshToken = async (req, res) => {
   // Try for any errors
   try {
     // Verify the refresh token
-    const decoded = verifyToken(refresh_token, process.env.JWT_REFRESH_SECRET);
+    const decoded = verifyToken(refresh_token);
     // Check if the token is valid
     if (!decoded) {
       // Return an error response
-      return res.status(401).json({ error: 'Invalid refresh token' });
+      return res.status(401).json({ error: 'Refresh token is invalid or expired' });
     }
 
-    // Find the user by the ID in the token
-    const user = await User.findById(decoded.user._id);
+    // Find the user by the ID in the token (email)
+    const userRef = db.collection('users').doc(decoded.user.email);
+    // Get the user document from Firestore
+    const userDoc = await userRef.get();
     // Check if the user exists and is active
-    if (!user || !user.isActive) {
+    if (!userDoc.exists || !userDoc.data().isActive) {
       // Return an error response
-      return res.status(401).json({ error: 'Invalid user or user is not active' });
+      return res.status(401).json({ error: 'Refresh token is invalid or expired' });
     }
 
     // Generate new tokens for the user
-    const tokens = generateTokens(user);
-    // Return the new tokens
+    const tokens = generateTokens(userDoc.data());
+    // Return the new tokensf
     res.json(tokens);
   } catch (error) { // Catch any errors
     // Return an error response

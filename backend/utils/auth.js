@@ -1,7 +1,7 @@
 /*
-Version: 1.0
+Version: 1.1
 Last edited by: Natalia Pakhomova
-Last edit date: 04/08/2024
+Last edit date: 06/08/2024
 A set of helper functions for hashing and verifying passwords, generating and verifying JWT tokens.
 */
 
@@ -83,7 +83,7 @@ const generateTokens = (user) => {
     const accessToken = jwt.sign(
         {
             tokenType: "access_token", // Token type
-            user: { _id: user._id } // User ID
+            user: { email: user.email, isAdmin: user.isAdmin } // User email and role
         },
         process.env.JWT_SECRET, // Use the access token secret
         { expiresIn: '10m' } // Set the expiry time to 10 minutes
@@ -92,7 +92,7 @@ const generateTokens = (user) => {
     const refreshToken = jwt.sign(
         {
             tokenType: "refresh_token",  // Token type
-            user: { _id: user._id } // User ID
+            user: { email: user.email, isAdmin: user.isAdmin } // User email and role
         },
         process.env.JWT_REFRESH_SECRET, // Use the refresh token secret
         { expiresIn: '30d' } // Set the expiry time to 30 days

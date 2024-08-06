@@ -1,7 +1,7 @@
 /*
-Version: 1.0
+Version: 1.1
 Last edited by: Natalia Pakhomova
-Last edit date: 04/08/2024
+Last edit date: 06/08/2024
 Middleware for protecting routes by verifying JWT tokens.
 */
 
@@ -29,7 +29,7 @@ const protect = (req, res, next) => {
     // Verify the token using the verifyToken function from the auth utility module
     const decoded = verifyToken(token);
     // Attach the decoded user ID to the request object
-    req.user = decoded.user._id;
+    req.user = decoded.user.email;
     // Call the next middleware function
     next();
   } catch (error) { // Catch any errors

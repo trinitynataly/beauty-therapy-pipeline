@@ -1,7 +1,7 @@
 /*
-Version: 1.0
+Version: 1.1
 Last edited by: Natalia Pakhomova
-Last edit date: 04/08/2024
+Last edit date: 06/08/2024
 Firebase initialization configuration for using Firebase Admin SDK.
 */
 
