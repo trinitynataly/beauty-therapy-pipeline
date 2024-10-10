@@ -12,9 +12,6 @@
     - [Running the Project](#running-the-project)
 - [Backend Configuration](#backend-configuration)
 - [Frontend Configuration](#frontend-configuration)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ## Features
 
@@ -140,15 +137,3 @@
 ## Frontend Configuration
 
 The frontend is built using React and styled with TailwindCSS and Vanilla Extract. Ensure that the `VITE_API_BASE_URL` environment variable in the `.env` file is set correctly to communicate with the backend.
-
-## Contributing
-
-If you would like to contribute to this project, feel free to open issues or submit pull requests.
-
-## License
-
-This project is licensed under the [ISC License](LICENSE).
-
-## Contact
-
-For questions or further information, please contact Natalia Pakhomova at [your-email@example.com].
