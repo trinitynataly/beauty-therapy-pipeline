@@ -1,7 +1,7 @@
 /*
-Version: 1.1
+Version: 1.2
 Last edited by: Natalia Pakhomova
-Last edit date: 06/08/2024
+Last edit date: 10/10/2024
 Controller functions for managing user data, including fetching the current user's profile.
 */
 
@@ -19,16 +19,20 @@ const db = admin.firestore();
 const getProfile = async (req, res) => {
   try {
     // Find the user by ID from the request object (set by the protect middleware)
-    const userRef = db.collection('users').doc(req.user);
+    const userRef = db.collection('users').doc(req.user.email);
     // Get the user document from Firestore
     const userDoc = await userRef.get();
     // Check if the user exists
     if (!userDoc.exists) {
       // Return a 404 error if the user is not found
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ error: 'User not found' });
     }
-    // Return the user profile data
-    res.json(userDoc.data());
+    // Get the user profile data
+    const userProfile = userDoc.data();
+    // Remove the password field from the user profile data if it exists
+    delete userProfile.password;
+    // Return the user profile data without the password field
+    res.json(userProfile);
   } catch (error) {
     // Return an error response
     res.status(500).json({ error: error.message });

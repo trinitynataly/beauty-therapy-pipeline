@@ -1,14 +1,18 @@
 /*
-Version: 1.1
+Version: 1.2
 Last edited by: Natalia Pakhomova
-Last edit date: 0/08/2024
+Last edit date: 09/10/2024
 Main application file for initializing and configuring the Express server.
 */
 
 // Import the Express library
 const express = require('express');
+// Import the CORS library
+const cors = require('cors');
 // Import dotenv for environment variable management
 const dotenv = require('dotenv');
+// Import Helmet for securing HTTP headers
+const helmet = require('helmet');
 // Import the function to initialize Firebase
 const { initializeFirebase } = require('./config/firebase');
 
@@ -22,15 +26,26 @@ initializeFirebase();
 const authRoutes = require('./routes/authRoutes');
 // Import the user routes
 const userRoutes = require('./routes/userRoutes');
+// Import the admin routes
+const adminRoutes = require('./routes/adminRoutes');
 
 
 // Read the SERVER_NAME environment variable or use 'localhost' as the default
 const SERVER_NAME = process.env.SERVER_NAME || 'localhost';
 
+// Define CORS options
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN, // Allow the frontend to send requests to the server
+  credentials: true, // Enable credentials (cookies, authorization headers)
+};
 
 
 // Create an Express application
 const app = express();
+// Use Helmet to help secure the application by setting various HTTP headers
+app.use(helmet());
+// Use CORS with the previously defined options
+app.use(cors(corsOptions));
 // Use middleware to parse JSON requests
 app.use(express.json()); 
 
@@ -38,6 +53,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 // Use user routes for all /api/user endpoints
 app.use('/api/user', userRoutes);
+// Use admin routes for all /api/admin endpoints
+app.use('/api/admin', adminRoutes);
 
 // Define a simple route for the root URL
 app.get('/', (req, res) => {

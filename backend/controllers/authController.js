@@ -1,7 +1,7 @@
 /*
-Version: 1.2
+Version: 1.3
 Last edited by: Natalia Pakhomova
-Last edit date: 06/08/2024
+Last edit date: 10/10/2024
 Controller functions for user registration and login, including validation and token generation.
 */
 
@@ -28,8 +28,6 @@ const register = async (req, res) => {
     // Return an error response
     return res.status(400).json({ error: error.details[0].message });
   }
-
-  console.log(value);
 
   // Decompose the request body into individual fields
   const { email, password, firstName, lastName, dob, gender, phone, street, suburb, postcode, state, country } = value;
@@ -72,7 +70,7 @@ const register = async (req, res) => {
     // Generate tokens for the user
     const tokens = generateTokens(user);
     // Return created user and tokens
-    res.status(201).json({ user, tokens});
+    res.status(201).json(tokens);
   } catch (error) { // Catch any errors
     // Return an error response
     res.status(400).json({ error: error.message });
@@ -105,7 +103,7 @@ const login = async (req, res) => {
     // Check if the user exists and the password matches
     if (!userDoc.exists || !(await verifyPassword(password, userDoc.data().password))) {
       // Return an error response
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
     // Generate tokens for the user
     const tokens = generateTokens(userDoc.data());
@@ -125,9 +123,9 @@ const login = async (req, res) => {
 */
 const refreshToken = async (req, res) => {
   // Get the refresh token from the request body
-  const { refresh_token } = req.body;
+  const { refreshToken } = req.body;
   // Check if the refresh token is provided
-  if (!refresh_token) {
+  if (!refreshToken) {
     // Return an error response
     return res.status(400).json({ error: 'Refresh token is required' });
   }
@@ -135,7 +133,7 @@ const refreshToken = async (req, res) => {
   // Try for any errors
   try {
     // Verify the refresh token
-    const decoded = verifyToken(refresh_token);
+    const decoded = verifyToken(refreshToken);
     // Check if the token is valid
     if (!decoded) {
       // Return an error response

@@ -1,5 +1,5 @@
 /*
-Version: 1.1
+Version: 1.2
 Last edited by: Natalia Pakhomova
 Last edit date: 06/08/2024
 A set of helper functions for hashing and verifying passwords, generating and verifying JWT tokens.
@@ -46,7 +46,7 @@ const verifyToken = (token) => {
         // Check the token type and verify the token with the appropriate secret
         if (decoded && decoded.tokenType) {
             // Select the secret based on the token type
-            const secret = decoded.tokenType === 'access_token'
+            const secret = decoded.tokenType === 'accessToken'
                 ? process.env.JWT_SECRET // Access token secret
                 : process.env.JWT_REFRESH_SECRET; // Refresh token secret
             // Verify the token with the secret
@@ -74,16 +74,31 @@ const decodeToken = (token) => {
 };
 
 /**
+ * Populate user details from user object for tokens
+ * @param {object} user - the user object
+ * @returns {object} - the user data
+ */
+const getUserDetails = (user) => {
+    // Return the user details for the token
+    return { 
+        firstName: user.firstName, // Populate the user's first name
+        lastName: user.lastName,  // Populate the user's last name
+        email: user.email, // Populate the user's email
+        isAdmin: user.isAdmin  // Populate the user's isAdmin flag
+    }
+}
+
+/**
  * Generate access and refresh tokens for the user.
  * @param {object} user - the user object to generate tokens for
- * @returns {{access_token: string, refresh_token: string}} - the generated tokens
+ * @returns {{accessToken: string, refreshToken: string}} - the generated tokens
  */
 const generateTokens = (user) => {
     // Generate an access token with a short expiry time
     const accessToken = jwt.sign(
         {
-            tokenType: "access_token", // Token type
-            user: { email: user.email, isAdmin: user.isAdmin } // User email and role
+            tokenType: "accessToken", // Token type
+            user: getUserDetails(user) // Populate user details for token
         },
         process.env.JWT_SECRET, // Use the access token secret
         { expiresIn: '10m' } // Set the expiry time to 10 minutes
@@ -91,14 +106,14 @@ const generateTokens = (user) => {
     // Generate a refresh token with a long expiry time
     const refreshToken = jwt.sign(
         {
-            tokenType: "refresh_token",  // Token type
-            user: { email: user.email, isAdmin: user.isAdmin } // User email and role
+            tokenType: "refreshToken",  // Token type
+            user: getUserDetails(user) // Populate user details for token
         },
         process.env.JWT_REFRESH_SECRET, // Use the refresh token secret
         { expiresIn: '30d' } // Set the expiry time to 30 days
     );
     // Return the generated tokens
-    return { access_token: accessToken, refresh_token: refreshToken };
+    return { accessToken: accessToken, refreshToken: refreshToken };
 };
 
 // Export the helper functions for password hashing and token management
