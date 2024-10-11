@@ -1,13 +1,12 @@
 /*
-Version: 1.0
+Version: 1.1
 Template styles for the logo component with variants
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/09/2024
+Last Edit Date: 11/10/2024
 */
 
 import '@fontsource/urbanist'; // Import the Urbanist font
 import { style, styleVariants, globalStyle } from '@vanilla-extract/css'; // Import the style functions
-import { sign } from 'crypto'; // Import the sign function from the crypto module
 
 // Base styles for the logo container
 const baseLogoStyle = style({
@@ -42,10 +41,15 @@ export const logoTextStyle = style({
 export const logoVariants = styleVariants({
   default: [baseLogoStyle, { maxHeight: '30px' }],
   large: [baseLogoStyle, { maxHeight: '80px', justifyContent: 'center' }],
+  white: [baseLogoStyle, { maxHeight: '30px', color: 'white' }],
 });
 
 // Global style to modify the image size based on the variant
 globalStyle(`${logoVariants.default} img`, {
+  width: '50px', // Image width for the default variant
+});
+
+globalStyle(`${logoVariants.white} img`, {
   width: '50px', // Image width for the default variant
 });
 
@@ -55,4 +59,10 @@ globalStyle(`${logoVariants.large} img`, {
 
 globalStyle(`${logoVariants.large} span`, {
   fontSize: '40px'
+});
+
+globalStyle(`${logoVariants.white} span`, {
+  background: '#FFFFFF',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
 });

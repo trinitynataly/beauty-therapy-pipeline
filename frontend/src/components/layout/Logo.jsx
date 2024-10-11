@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Logo component for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 07/09/2024
+Last Edit Date: 11/10/2024
 */
 
 import PropTypes from 'prop-types'; // Import the PropTypes library
@@ -17,7 +17,7 @@ const Logo = ({ variant = 'default' }) => {
   // Return the logo component
   return (
     <a href="/" className={logoVariants[variant]}>
-      <img src="/lotus.svg" alt="Logo" />
+      <img src={variant=='white'?'/lotus-white.svg':'/lotus.svg'} alt="Logo" />
       <span className={logoTextStyle}>Beauty by Gulia</span>
     </a>
   );
