@@ -1,13 +1,13 @@
 /*
-Version: 1.2
+Version: 1.3
 UserForm component for editing and creating users in the admin panel.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import the useState and useEffect hooks from React
 import PropTypes from 'prop-types'; // Import PropTypes for defining component prop types
-import { inputField, formContainer, buttonStyle, errorMessage } from '../../../styles/admin.css.ts'; // Import styles
+import { inputField, formContainer, buttonStyle, errorMessage } from '../../../styles/admin.css.js'; // Import styles
 import Joi from 'joi'; // Import Joi for form validation
 
 // Define validation schema for the user form

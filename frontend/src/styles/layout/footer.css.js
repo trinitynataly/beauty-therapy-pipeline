@@ -1,17 +1,19 @@
 /*
-Version: 1.1
+Version: 1.2
 Template styles for the footer
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 11/10/2024
+Last Edit Date: 15/10/2024
 */
 
 // Import the style function from vanilla-extract
 import { style } from '@vanilla-extract/css';
+// Import the theme variables from the theme.css file
+import { themeVars } from '../theme.css';
 
 // Define styles for the footer container
 export const footerContainer = style({
   marginTop: '2rem',
-  backgroundColor: '#C7495C'
+  backgroundColor: themeVars.color.secondary,
 });
 
 // Define styles for the footer menu
@@ -27,7 +29,7 @@ export const footerMenuItem = style({
   textDecoration: 'none',
   fontSize: '0.875rem',
   lineHeight: '1.25rem',
-  color: 'white',
+  color: themeVars.color.white,
   ':hover': {
     textDecoration: 'underline',
   },

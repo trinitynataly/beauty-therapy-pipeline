@@ -1,12 +1,11 @@
 /*
-Version: 1.0
+Version: 1.1
 Admin section styles
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 
 import { style } from '@vanilla-extract/css';
-import exp from 'constants';
 
 // Define styles for admin container
 export const adminContainer = style({

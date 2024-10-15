@@ -1,12 +1,13 @@
 /*
-Version: 1.1
+Version: 1.2
 Template Header component for the frontend layout.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
-import { headerContainer, menuItem, specialButton } from '../../styles/header.css'; // Import the header styles
+import { headerContainer, menuItem } from '../../styles/layout/header.css'; // Import the header styles
+import { primaryButton, secondaryButton } from '../../styles/common/buttons.css';
 import Logo from './Logo'; // Import the Logo component
 import useAuth from '../../hooks/useAuth'; // Import the custom useAuth hook
 
@@ -42,7 +43,7 @@ const Header = () => {
             // Show logout button if user is authenticated
             <>
               <div>Hello, { user.firstName }!</div>
-              <button className={specialButton} onClick={logout}>
+              <button className={primaryButton} onClick={logout}>
                 Logout
               </button>
             </>
@@ -50,10 +51,10 @@ const Header = () => {
             // Show Sign Up and Login buttons if no user is authenticated
             <>
               <Link to="/register">
-                <button className={specialButton}>Sign Up</button>
+                <button className={primaryButton}>Sign Up</button>
               </Link>
               <Link to="/login">
-                <button className={specialButton}>Login</button>
+                <button className={secondaryButton}>Login</button>
               </Link>
             </>
           )}

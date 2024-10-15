@@ -1,16 +1,29 @@
 /*
-Version: 1.1
+Version: 1.3
 Contact page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 11/10/2024
+Last Edit Date: 15/10/2024
 */
 
-// Import styles
-import { heroStyle } from '../styles/home.css'; // Reusing the hero style from the Home page
-import { aboutContainer, sectionTitle } from '../styles/about.css';
+// Import Helmet component
+import { Helmet } from 'react-helmet-async';
+// Import block styles
+import { heroStyle } from '../styles/common/blocks.css';
+// Import text styles
+import { sectionTitle } from '../styles/common/texts.css';
+// Import form styles
+import { inputField } from '../styles/common/forms.css';
 
 const Contact = () => (
   <>
+    {/* Meta tags */}
+    <Helmet>
+      <title>Contact Us | Beauty by Gulia</title>
+      <meta
+        name="description"
+        content="Contact Beauty by Gulia for all your beauty needs. We offer a range of services including facials, waxing, and makeup."
+      />
+    </Helmet>
     {/* Hero Section */}
     <div className={`${heroStyle} h-96 flex items-center justify-center text-white`}>
       <div className="text-center relative z-10">
@@ -19,7 +32,7 @@ const Contact = () => (
     </div>
 
     {/* Contact Content */}
-    <div className={aboutContainer}>
+    <section className="py-16">
       <h1 className={sectionTitle}>Get in Touch</h1>
       <div className="flex flex-col items-center gap-8">
         <div className="text-center max-w-lg">
@@ -36,17 +49,17 @@ const Contact = () => (
           <input
             type="text"
             placeholder="Your Name"
-            className="p-3 border border-gray-300 rounded-lg w-full"
+            className={`${inputField} w-full`}
           />
           <input
             type="email"
             placeholder="Your Email"
-            className="p-3 border border-gray-300 rounded-lg w-full"
+            className={`${inputField} w-full`}
           />
           <textarea
             rows="5"
             placeholder="Your Message"
-            className="p-3 border border-gray-300 rounded-lg w-full"
+            className={`${inputField} w-full`}
           ></textarea>
           <button
             type="submit"
@@ -63,7 +76,7 @@ const Contact = () => (
           <p><strong>Location:</strong> Aspendale</p>
         </div>
       </div>
-    </div>
+    </section>
   </>
 );
 

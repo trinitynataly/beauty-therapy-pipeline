@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Global styles
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/09/2024
+Last Edit Date: 15/10/2024
 */
 
 // Import the globalStyle function from vanilla-extract
@@ -13,7 +13,6 @@ globalStyle('body, html, #root', {
   margin: 0,
   padding: 0,
   height: '100%',
-  fontFamily: 'Arial, sans-serif',
 });
 
 // Define global styles for the root element

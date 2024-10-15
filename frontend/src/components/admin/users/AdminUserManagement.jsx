@@ -1,15 +1,15 @@
 /*
-Version: 1.2
+Version: 1.3
 Admin user management component
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import the useState and useEffect hooks from React
 import UserList from './UserList'; // Import the UserList component
 import UserForm from './UserForm'; // Import the UserForm component
 import { apiSecureRequest } from '../../../utils/auth'; // Import the apiSecureRequest function
-import { adminContainer } from '../../../styles/admin.css.ts'; // Import the adminContainer class
+import { adminContainer } from '../../../styles/admin.css.js'; // Import the adminContainer class
 
 /**
  * Admin user management component to manage users.

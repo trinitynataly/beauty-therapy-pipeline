@@ -1,12 +1,20 @@
 
+/*
+Version: 1.3
+Login page for the frontend.
+Last Edited by: Natalia Pakhomova
+Last Edit Date: 15/10/2024
+*/
 
+import { Helmet } from 'react-helmet-async'; // Import Helmet component
 import { useState } from 'react'; // Import useState from react
 import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import { apiRequest } from '../utils/api'; // Import the apiRequest function
 import Logo from '../components/layout/Logo'; // Import the Logo component
 import useApiErrorHandler from '../hooks/useApiErrorHandler'; // Import the useApiErrorHandler hook
 import Joi from 'joi'; // Import Joi for validation
-import { loginFormContainer, inputField, errorMessage, buttonStyle } from '../styles/login.css.ts'; // Import the CSS styles
+import { primaryButton } from '../styles/common/buttons.css'; // Import the button styles
+import { formContainer, inputField, errorMessage } from '../styles/common/forms.css'; // Import the form styles
 
 // Define Joi schema for form validation
 const schema = Joi.object({
@@ -176,62 +184,74 @@ const Register = () => {
 
   // Return the Register form
   return (
-    <div className={`flex justify-center items-center min-h-screen ${loginFormContainer}`}>
-      {/* Register Form */}
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        {/* Logo */}
-        <Logo variant='large' />
-        {/* Title */}
-        <h2 className="text-2xl font-bold mt-4 mb-4 text-center">Register New Account</h2>
+    <>
+      {/* Helmet component */}
+      <Helmet>
+        {/* Page title */}
+        <title>Register new Account | Beauty by Gulia</title>
+        {/* Meta description */}
+        <meta
+          name="description"
+          content="Register for a new account with Beauty by Gulia to access exclusive offers and services."
+        />
+      </Helmet>
+      <div className={`flex justify-center items-center min-h-screen ${formContainer}`}>
+        {/* Register Form */}
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+          {/* Logo */}
+          <Logo variant='large' />
+          {/* Title */}
+          <h2 className="text-2xl font-bold mt-4 mb-4 text-center">Register New Account</h2>
 
-        {/* Form Fields in a loop */}
-        {Object.entries(formData).map(([key, value]) => (
-          <div className="mb-4" key={key}>
-            <label className="block text-sm font-medium mb-1" htmlFor={key}>
-              {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
-            </label>
-            {key === 'gender' ? (
-              <select
-                id={key}
-                value={value}
-                onChange={handleChange}
-                className={`w-full border px-3 py-2 rounded ${inputField}`}
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="not listed">Not Listed</option>
-              </select>
-            ) : (
-              <input
-                id={key}
-                type={key === 'password' || key === 'confirmPassword' ? 'password' : key === 'dob' ? 'date' : 'text'}
-                value={value}
-                onChange={handleChange}
-                className={`w-full border px-3 py-2 rounded ${inputField}`}
-              />
-            )}
-            {validationErrors[key] && <div className={`text-red-500 ${errorMessage}`}>{validationErrors[key]}</div>}
+          {/* Form Fields in a loop */}
+          {Object.entries(formData).map(([key, value]) => (
+            <div className="mb-4" key={key}>
+              <label className="block text-sm font-medium mb-1" htmlFor={key}>
+                {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
+              </label>
+              {key === 'gender' ? (
+                <select
+                  id={key}
+                  value={value}
+                  onChange={handleChange}
+                  className={`${inputField} w-full`}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="not listed">Not Listed</option>
+                </select>
+              ) : (
+                <input
+                  id={key}
+                  type={key === 'password' || key === 'confirmPassword' ? 'password' : key === 'dob' ? 'date' : 'text'}
+                  value={value}
+                  onChange={handleChange}
+                  className={`${inputField} w-full`}
+                />
+              )}
+              {validationErrors[key] && <div className={`text-red-500 ${errorMessage}`}>{validationErrors[key]}</div>}
+            </div>
+          ))}
+
+          {/* Display General Error Message */}
+          {error && <div className={`text-red-500 mb-4 ${errorMessage}`}>{error}</div>}
+
+          {/* Submit Button */}
+          <button type="submit" className={`${primaryButton} w-full`}>
+            Register new Account
+          </button>
+
+          {/* Login Link */}
+          <div className="mt-4 text-center">
+            <span className="text-gray-600">Already have an account? </span>
+            <Link to="/login">
+              Login here
+            </Link>
           </div>
-        ))}
-
-        {/* Display General Error Message */}
-        {error && <div className={`text-red-500 mb-4 ${errorMessage}`}>{error}</div>}
-
-        {/* Submit Button */}
-        <button type="submit" className={`w-full py-2 bg-blue-500 text-white rounded ${buttonStyle}`}>
-          Register
-        </button>
-
-        {/* Login Link */}
-        <div className="mt-4 text-center">
-          <span className="text-gray-600">Already have an account? </span>
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Login here
-          </Link>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 

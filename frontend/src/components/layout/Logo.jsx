@@ -1,12 +1,12 @@
 /*
-Version: 1.1
+Version: 1.2
 Logo component for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 11/10/2024
+Last Edit Date: 15/10/2024
 */
 
 import PropTypes from 'prop-types'; // Import the PropTypes library
-import { logoVariants, logoTextStyle } from '../../styles/logo.css'; // Import the logoVariants and logoTextStyle from the logo.css file
+import { logoVariants, logoTextStyle } from '../../styles/common/logo.css'; // Import the logoVariants and logoTextStyle from the logo.css file
 
 /**
  * Logo component to display the site logo. 

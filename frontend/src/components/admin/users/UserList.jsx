@@ -1,12 +1,12 @@
 /*
-Version: 1.0
+Version: 1.1
 UserList component for the display of all users in the admin panel.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/09/2024
+Last Edit Date: 10/15/2024
 */
 
 import PropTypes from 'prop-types'; // Import the PropTypes library from the prop-types package
-import { userListContainer, userItem, actionButton } from '../../../styles/admin.css.ts'; // Import the CSS modules
+import { userListContainer, userItem, actionButton } from '../../../styles/admin.css.js'; // Import the CSS modules
 
 /**
  * UserList component to display a list of users.

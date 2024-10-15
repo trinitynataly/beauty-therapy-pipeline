@@ -1,12 +1,12 @@
 /*
-Version: 1.1
+Version: 1.2
 Template Footer component for the frontend layout.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 11/10/2024
+Last Edit Date: 15/10/2024
 */
 
 // Import the footer styles
-import { footerContainer, footerMenu, footerMenuItem } from '../../styles/footer.css';
+import { footerContainer, footerMenu, footerMenuItem } from '../../styles/layout/footer.css';
 // Import the Logo component
 import Logo from './Logo';
 
@@ -62,8 +62,8 @@ const Footer = () => {
           {/*Wor */}
           <div>
             <h4 className="font-bold mb-2">Contacts</h4>
-            <p className="text-sm mb-1"><strong>Email:</strong> <a href="mailto:Gulia@beautybygulia.com">Gulia@beautybygulia.com</a></p>
-            <p className="text-sm mb-1"><strong>Phone:</strong> <a href="tel:+1234567890">0477 547 398</a></p>
+            <p className="text-sm mb-1"><strong>Email:</strong> <a href="mailto:Gulia@beautybygulia.com" className="text-white">Gulia@beautybygulia.com</a></p>
+            <p className="text-sm mb-1"><strong>Phone:</strong> <a href="tel:+1234567890" className="text-white">0477 547 398</a></p>
             
           </div>
         </div>

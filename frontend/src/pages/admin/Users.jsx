@@ -1,13 +1,13 @@
 /*
-Version: 1.1
+Version: 1.2
 Admin user management page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 
 import AdminUserManagement from '../../components/admin/users/AdminUserManagement'; // Import the AdminUserManagement component
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
-import { adminPageContainer, adminPageHeader, linkStyle } from '../../styles/admin.css.ts'; // Import the admin page styles
+import { adminPageContainer, adminPageHeader, linkStyle } from '../../styles/admin.css.js'; // Import the admin page styles
 
 /**
  * Admin user management page component.

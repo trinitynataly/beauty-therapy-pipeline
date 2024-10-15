@@ -1,12 +1,13 @@
 /*
-Version: 1.1
+Version: 1.2
 Template styles for the logo component with variants
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 11/10/2024
+Last Edit Date: 15/10/2024
 */
 
 import '@fontsource/urbanist'; // Import the Urbanist font
 import { style, styleVariants, globalStyle } from '@vanilla-extract/css'; // Import the style functions
+import { themeVars } from '../theme.css'; // Import the theme variables
 
 // Base styles for the logo container
 const baseLogoStyle = style({
@@ -15,6 +16,10 @@ const baseLogoStyle = style({
   alignItems: 'center',
   width: '100%',
   gap: '10px',
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'none',
+  },
 });
 
 // Create separate styles for the image and text elements
@@ -30,11 +35,15 @@ export const logoTextStyle = style({
   fontFamily: '"Urbanist", sans-serif',
   fontWeight: 500,
   fontSize: '26px',
-  background: 'linear-gradient(90deg, #466A44, #89D085)',
+  background: `linear-gradient(90deg, ${themeVars.color.primary}, ${themeVars.color.accent3})`,
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
   transition: 'font-size 0.3s ease',
   fontStyle: 'italic',
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'none',
+  },
 });
 
 // Variants for the logo based on size
@@ -62,7 +71,7 @@ globalStyle(`${logoVariants.large} span`, {
 });
 
 globalStyle(`${logoVariants.white} span`, {
-  background: '#FFFFFF',
+  background: themeVars.color.white,
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
 });

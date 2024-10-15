@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Profile page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 15/10/2024
 */
 import useAuth from '../../hooks/useAuth'; // Import your custom useAuth hook
 
@@ -16,7 +16,7 @@ const Profile = () => {
 
   return (
     <div>
-      <h1>Welcome, {user?.name || 'User'}</h1>
+      <h1>Welcome, {user?.firstName || 'User'}</h1>
       <p>Email: {user?.email}</p>
     </div>
   );
