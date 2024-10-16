@@ -1,8 +1,8 @@
 /*
-Version: 1.2
+Version: 1.3
 Utility function to make API requests.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 06/09/2024
+Last Edit Date: 16/10/2024
 */
 
 // Import the Axios library
@@ -14,6 +14,7 @@ import axios from 'axios';
  * @param {string} method - The HTTP method for the request.
  * @param {Object} payload - The request payload.
  * @param {Object} headers - The request headers.
+ * @param {boolean} isFormData - Whether the payload is form data.
  * @returns {Promise<Object>} - The response data.
  */
 export const apiRequest = async (endpoint, method = 'GET', payload = {}, headers = {}) => {
@@ -21,7 +22,6 @@ export const apiRequest = async (endpoint, method = 'GET', payload = {}, headers
   const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
   // Construct the full URL
   const url = `${baseUrl}/${endpoint}`;
-  
   // Make the Axios request with provided headers
   try {
     // Make the request using Axios

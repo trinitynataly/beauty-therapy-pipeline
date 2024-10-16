@@ -1,8 +1,8 @@
 /*
-Version: 1.3
+Version: 1.4
 Utility functions for authentication and secure API requests.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 16/10/2024
 */
 
 import { jwtDecode } from "jwt-decode"; // Import the jwtDecode function from the jwt-decode library
@@ -114,15 +114,15 @@ const isTokenExpiringSoon = (token) => {
 
 /**
  * Function to automatically refresh the access token using the refresh token.
- * @param {string} refreshToken - The refresh token to use
+ * @param {string} token - The refresh token to use
  * @returns {Object} - The new access and refresh tokens
  */
-export const ApiRefreshToken = async (refreshToken) => {
+export const ApiRefreshToken = async (token) => {
   // Check if the refresh token is missing and return null if so
-  if (!refreshToken) return null;
+  if (!token) return null;
   try {
     // Use the apiRequest function to refresh tokens
-    const data = await apiRequest('auth/refresh-token', 'POST', { refreshToken });
+    const data = await apiRequest('auth/refresh-token', 'POST', { refreshToken: token });
     // Extract the new tokens from the response data
     const { accessToken, refreshToken } = data;
     // Check if the tokens exist
@@ -151,11 +151,10 @@ export const ApiRefreshToken = async (refreshToken) => {
  * @returns {Object} - The response data
  */
 
-export const apiSecureRequest = async (endpoint, method = 'GET', payload = {}) => {
+export const apiSecureRequest = async (endpoint, method = 'GET', payload = {}, isFormData = false) => {
   try {
     // Retrieve tokens using the helper function
     let { accessToken, refreshToken } = getStoredTokens();
-
     // Check if accessToken is near expiration or expired
     if (accessToken && isTokenExpiringSoon(accessToken)) {
       // Attempt to refresh the access token
@@ -172,8 +171,8 @@ export const apiSecureRequest = async (endpoint, method = 'GET', payload = {}) =
 
     // Include Authorization header if accessToken exists
     const headers = {
-      'Content-Type': 'application/json', // Set the content type to JSON
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}), // Add the Authorization header if accessToken exists
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }), // If FormData, do not set Content-Type
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     };
 
     // Call the base apiRequest function with the new headers

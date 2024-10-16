@@ -1,13 +1,16 @@
 /*
-Version: 1.2
+Version: 1.3
 Admin user management page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 16/10/2024
 */
 
-import AdminUserManagement from '../../components/admin/users/AdminUserManagement'; // Import the AdminUserManagement component
-import { Link } from 'react-router-dom'; // Import the Link component from React Router
-import { adminPageContainer, adminPageHeader, linkStyle } from '../../styles/admin.css.js'; // Import the admin page styles
+// Import Helmet component
+import { Helmet } from 'react-helmet-async';
+// Import the AdminUserManagement component
+import AdminUserManagement from '../../components/admin/users/AdminUserManagement';
+// Import the Link component from React Router
+import { Link } from 'react-router-dom';
 
 /**
  * Admin user management page component.
@@ -15,26 +18,25 @@ import { adminPageContainer, adminPageHeader, linkStyle } from '../../styles/adm
  */
 const AdminUserManagementPage = () => {
   return (
-    <div className={`p-8 ${adminPageContainer}`}>
-      {/* Page Header */}
-      <div className={`flex justify-between items-center ${adminPageHeader}`}>
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <Link to="/" className={`text-blue-500 underline ${linkStyle}`}>
-          Back to Home
-        </Link>
-      </div>
+    <>
+      {/* Helmet component */}
+      <Helmet>
+        {/* Page title */}
+        <title>User Management | Admin Section | Beauty by Gulia</title>
+        {/* Meta description */}
+        <meta name="description" content="Admin page for managing users on the Beauty by Gulia website." />
+      </Helmet>
+      {/* Admin Page Container */}
+      <div className="container mx-auto py-8">
+        {/* Page Header */}
+        <h1 className="text-3xl font-bold mb-6">
+          <Link to="/admin" className="text-primary no-underline">Admin Section</Link> / User Management
+        </h1>
 
-      {/* Page Navigation */}
-      <div className="mt-4 mb-8">
-        <Link to="/admin/users" className={`mr-4 text-blue-500 underline ${linkStyle}`}>
-          User Management
-        </Link>
-        {/* Add more admin links here as needed */}
+        {/* Admin Layout */}
+        <AdminUserManagement />
       </div>
-
-      {/* Main User Management Component */}
-      <AdminUserManagement />
-    </div>
+    </>
   );
 };
 

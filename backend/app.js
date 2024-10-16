@@ -1,7 +1,7 @@
 /*
-Version: 1.2
+Version: 1.3
 Last edited by: Natalia Pakhomova
-Last edit date: 09/10/2024
+Last edit date: 16/10/2024
 Main application file for initializing and configuring the Express server.
 */
 
@@ -26,6 +26,8 @@ initializeFirebase();
 const authRoutes = require('./routes/authRoutes');
 // Import the user routes
 const userRoutes = require('./routes/userRoutes');
+// Import the category routes
+const categoryRoutes = require('./routes/categoryRoutes');
 // Import the admin routes
 const adminRoutes = require('./routes/adminRoutes');
 
@@ -55,6 +57,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 // Use admin routes for all /api/admin endpoints
 app.use('/api/admin', adminRoutes);
+// Use category routes for all /api/categories endpoints
+app.use('/api/categories', categoryRoutes);
 
 // Define a simple route for the root URL
 app.get('/', (req, res) => {

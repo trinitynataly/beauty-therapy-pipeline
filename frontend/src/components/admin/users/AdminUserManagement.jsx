@@ -1,15 +1,14 @@
 /*
-Version: 1.3
+Version: 1.4
 Admin user management component
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 16/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import the useState and useEffect hooks from React
 import UserList from './UserList'; // Import the UserList component
 import UserForm from './UserForm'; // Import the UserForm component
 import { apiSecureRequest } from '../../../utils/auth'; // Import the apiSecureRequest function
-import { adminContainer } from '../../../styles/admin.css.js'; // Import the adminContainer class
 
 /**
  * Admin user management component to manage users.
@@ -42,7 +41,17 @@ const AdminUserManagement = () => {
   // Function to handle form submission (create or update)
   const handleFormSubmit = async (formData) => {
     try {
+      // Remove the confirm password field
+      delete formData.confirmPassword;
+      // Check if the password field is empty
+      if (!formData.password) {
+        // Remove the password field if it is empty
+        delete formData.password;
+      }
+
       if (selectedUser) {
+        // Remove email field from form data
+        delete formData.email;
         // Update user
         await apiSecureRequest(`admin/users/${selectedUser.email}`, 'PUT', formData);
       } else {
@@ -69,8 +78,7 @@ const AdminUserManagement = () => {
   };
 
   return (
-    <div className={`p-8 ${adminContainer}`}>
-      <h1 className="text-3xl font-bold mb-6">User Management</h1>
+    <>
 
       {/* User List */}
       <UserList users={users} onEditUser={setSelectedUser} onDeleteUser={handleDeleteUser} />
@@ -87,13 +95,13 @@ const AdminUserManagement = () => {
         />
       ) : (
         <button
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+          className="mt-4 bg-primary text-white px-4 py-2 rounded"
           onClick={() => setIsCreating(true)}
         >
           Create New User
         </button>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Template styles texts
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 16/10/2024
 */
 
 // Import the style function from vanilla-extract
@@ -35,4 +35,12 @@ export const boxTitle = style({
   marginBottom: '1rem',
   fontFamily: '"Urbanist", sans-serif',
   textAlign: 'center',
+});
+
+export const contactText = style({
+  fontSize: '1rem',
+  fontWeight: '600',
+  color: themeVars.color.secondary,
+  marginBottom: '1rem',
+  fontFamily: '"Urbanist", sans-serif',
 });

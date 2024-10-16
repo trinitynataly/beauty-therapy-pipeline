@@ -1,18 +1,22 @@
 /*
-Version: 1.3
+Version: 1.4
 About page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 16/10/2024
 */
 
 // Import Helmet component
 import { Helmet } from 'react-helmet-async';
+// Import Link component from React Router
+import { Link } from 'react-router-dom';
 // Import image styles
 import { circleImage } from '../styles/common/images.css';
 // Import text styles
 import { sectionTitle, sectionSubTitle } from '../styles/common/texts.css';
+// Import button styles
+import { secondaryButton } from '../styles/common/buttons.css';
 // Import block styles
-import { heroStyle } from '../styles/common/blocks.css';
+import { aboutStyle } from '../styles/common/blocks.css';
 // Import Gulia photo
 import gulia from '../assets/gulia.jpg';
 
@@ -26,10 +30,17 @@ const About = () => (
         <meta name="description" content="Learn more about Gulia, the beauty therapist behind Beauty by Gulia. Find out what drives her passion for beauty treatments and how she helps her clients feel amazing." />
       </Helmet>
     {/* Hero Section */}
-    <div className={`${heroStyle} flex items-center justify-center text-white`}>
-      <div className="text-center relative z-10">
-        <h1 className="text-6xl font-bold">About Us</h1>
-      </div>
+    <div className={`${aboutStyle} flex items-center justify-center text-white`}>
+    <div className="text-center relative z-10">
+          {/* Hero subtitle */}
+          <h3 className="text-2xl font-normal pb-2">Discover the Beauty of You</h3>
+          {/* Hero title */}
+          <h1 className="text-6xl font-bold">Where Passion Meets Care</h1>
+          {/* Hero CTA button */}
+          <Link to="/services">
+            <button className={`${secondaryButton} mt-6 text-lg font-bold h-12 px-20 py-2 rounded-full`}>Book a Spot</button>
+          </Link>
+        </div>
     </div>
 
     {/* About Content */}

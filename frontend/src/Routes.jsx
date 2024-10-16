@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Routes component for the frontend
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/09/2024
+Last Edit Date: 16/10/2024
 */
 
 import { Routes, Route } from 'react-router-dom'; // Import the Routes and Route components from React Router
@@ -20,6 +20,7 @@ import Profile from './pages/user/Profile'; // Import Profile component
 // Import Admin routes
 import Admin from './pages/admin/Admin'; // Import Admin component
 import Users from './pages/admin/Users'; // Import Users component
+import Categories from './pages/admin/Categories'; // Import Categories component
 
 // Import NotFound component
 import NotFound from './pages/NotFound'; // Import NotFound component
@@ -45,6 +46,7 @@ const AppRoutes = () => {
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/categories" element={<Categories />} />
         </Route>
         {/* 404 route */}
         <Route path="*" element={<NotFound />} />

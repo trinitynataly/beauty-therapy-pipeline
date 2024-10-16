@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Global form styles
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 16/10/2024
 */
 
 // import the style function from vanilla-extract
@@ -12,8 +12,6 @@ import { style } from '@vanilla-extract/css';
 export const formContainer = style({
   backgroundColor: '#f7f7f7',
   padding: '2rem',
-  borderRadius: '8px',
-  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
 });
 
 // Define styles for the login form title
@@ -35,4 +33,12 @@ export const inputField = style({
 export const errorMessage = style({
   color: '#ff4d4f',
   fontSize: '12px',
+});
+
+// Define styles for table rows
+export const tableRow = style({
+  borderBottom: '1px solid #e5e7eb',
+  ':last-child': {
+    borderBottom: 'none',
+  },
 });
