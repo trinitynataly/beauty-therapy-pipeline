@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 CategoryForm component for editing and creating categories in the admin panel.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 17/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import useState and useEffect from React
@@ -19,6 +19,8 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     name: '',
     image: null,
+    sortOrder: 0,
+    isPublished: true,
   });
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -27,26 +29,35 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
       setFormData({
         name: category.name,
         image: null,
+        sortOrder: category.sortOrder || 0,
+        isPublished: category.isPublished ? category.isPublished : false,
       });
     } else {
       setFormData({
         name: '',
         image: null,
+        sortOrder: 0,
+        isPublished: true,
       });
     }
   }, [category]);
 
   const handleChange = (e) => {
-    const { id, value, files } = e.target;
-    setFormData({ ...formData, [id]: files ? files[0] : value });
+    const { id, value, files, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [id]: type === 'file' ? files[0] : type === 'checkbox' ? checked : value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Create a FormData object
     const formDataToSubmit = new FormData();
     formDataToSubmit.append('name', formData.name);
+    formDataToSubmit.append('sortOrder', formData.sortOrder);
+    formDataToSubmit.append('isPublished', formData.isPublished);
     
     if (formData.image) {
       formDataToSubmit.append('image', formData.image);
@@ -84,6 +95,31 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
               onChange={handleChange}
               className="w-full border px-3 py-2 rounded"
             />
+          </div>
+
+          {/* Sort Order */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1" htmlFor="sortOrder">Sort Order</label>
+            <input
+              id="sortOrder"
+              type="number"
+              value={formData.sortOrder}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+            />
+          </div>
+
+          {/* Published */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1" htmlFor="isPublished">Published</label>
+            <input
+              id="isPublished"
+              type="checkbox"
+              checked={formData.isPublished}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <span>{formData.isPublished ? 'Yes' : 'No'}</span>
           </div>
 
           {/* Submit and Cancel Buttons */}

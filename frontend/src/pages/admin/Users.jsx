@@ -1,8 +1,8 @@
 /*
-Version: 1.3
+Version: 1.4
 Admin user management page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 17/10/2024
 */
 
 // Import Helmet component
@@ -22,7 +22,7 @@ const AdminUserManagementPage = () => {
       {/* Helmet component */}
       <Helmet>
         {/* Page title */}
-        <title>User Management | Admin Section | Beauty by Gulia</title>
+        <title>Users | Admin Section | Beauty by Gulia</title>
         {/* Meta description */}
         <meta name="description" content="Admin page for managing users on the Beauty by Gulia website." />
       </Helmet>
@@ -30,7 +30,7 @@ const AdminUserManagementPage = () => {
       <div className="container mx-auto py-8">
         {/* Page Header */}
         <h1 className="text-3xl font-bold mb-6">
-          <Link to="/admin" className="text-primary no-underline">Admin Section</Link> / User Management
+          <Link to="/admin" className="text-primary no-underline">Admin Section</Link> / Users
         </h1>
 
         {/* Admin Layout */}

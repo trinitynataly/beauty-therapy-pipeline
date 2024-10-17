@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Admin category management page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 17/10/2024
 */
 
 // Import Helmet component
@@ -22,7 +22,7 @@ const AdminCategoryManagementPage = () => {
       {/* Helmet component */}
       <Helmet>
         {/* Page title */}
-        <title>Category Management | Admin Section | Beauty by Gulia</title>
+        <title>Categories | Admin Section | Beauty by Gulia</title>
         {/* Meta description */}
         <meta name="description" content="Admin page for managing categories on the Beauty by Gulia website." />
       </Helmet>
@@ -30,7 +30,7 @@ const AdminCategoryManagementPage = () => {
       <div className="container mx-auto py-8">
         {/* Page Header */}
         <h1 className="text-3xl font-bold mb-6">
-          <Link to="/admin" className="text-primary no-underline">Admin Section</Link> / Category Management
+          <Link to="/admin" className="text-primary no-underline">Admin Section</Link> / Categories
         </h1>
 
         {/* Admin Layout */}

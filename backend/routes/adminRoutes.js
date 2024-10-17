@@ -1,9 +1,9 @@
 /*
-Version: 1.1
+Version: 1.2
 Main routes for admin-related operations, such as user management.
 Only accessible to users with isAdmin = true.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 17/10/2024
 */
 
 // Import the Express framework
@@ -14,6 +14,8 @@ const { protectMiddleware, adminMiddleware } = require('../middlewares/authMiddl
 const adminUserRoutes = require('./admin/adminUserRoutes');
 // Import the admin category routes
 const adminCategoryRoutes = require('./admin/adminCategoryRoutes');
+// Import the admin service routes
+const adminServiceRoutes = require('./admin/adminServiceRoutes');
 
 const router = express.Router();
 
@@ -25,6 +27,8 @@ router.use(adminMiddleware); // Apply admin restriction to all routes
 router.use('/users', adminUserRoutes); // Base path will be /api/admin/users
 // Use adminCategoryRoutes for handling category management-related operations
 router.use('/categories', adminCategoryRoutes); // Base path will be /api/admin/categories
+// Use adminServiceRoutes for handling service management-related operations
+router.use('/services', adminServiceRoutes); // Base path will be /api/admin/services
 
 // You can define other admin routes here, such as for managing other resources (e.g., products, categories, etc.)
 
