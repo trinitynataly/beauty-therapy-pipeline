@@ -1,8 +1,8 @@
 /*
-Version: 1.4
+Version: 1.5
 AuthContext component for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 31/10/2024
 */
 
 import { createContext, useState, useEffect, useCallback } from 'react'; // Import createContext, useState, useEffect, and useCallback from React
@@ -25,7 +25,7 @@ const AuthContext = createContext({
  * @param {Object} children - The child components to render.
  * @returns {JSX.Element} - The AuthContext.Provider component with the child components.
  */
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // User state to store user information
   const [loading, setLoading] = useState(true); // Loading state to show spinner while checking auth
 
@@ -107,5 +107,5 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired, // Children nodes are required
 };
 
-// Export the AuthContext
-export default AuthContext;
+// Export the AuthContext and AuthProvider
+export { AuthContext, AuthProvider };

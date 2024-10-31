@@ -1,8 +1,8 @@
 /*
-Version: 1.4
+Version: 1.5
 Home page for the frontend with dynamic categories.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 31/10/2024
 */
 
 // Import necessary libraries
@@ -62,7 +62,7 @@ const Home = () => {
           <h3 className="text-2xl font-normal pb-2">Welcome to Gulia&apos;s Beauty Therapy</h3>
           <h1 className="text-6xl font-bold">Beauty Beyond Stress</h1>
           <Link to="/services">
-            <button className={`${secondaryButton} mt-6 text-lg font-bold h-12 px-20 py-2 rounded-full`}>Book a Spot</button>
+            <button className={`${secondaryButton} mt-6 text-lg font-bold h-12 px-20 py-2 rounded-full`}>Browse our Services</button>
           </Link>
         </div>
       </div>

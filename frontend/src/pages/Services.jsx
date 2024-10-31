@@ -1,70 +1,113 @@
 /*
-Version: 1.0
-About page for the frontend.
+Version: 1.1
+Services page for the frontend.
+Loads services with categories from the API and displays them in blocks.
+Added functionality to auto-scroll to a specific service if anchor is provided in URL.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 29/10/2024
 */
 
-// Import Helmet component
+// Import necessary libraries
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-// Import Link component from React Router
-import { Link } from 'react-router-dom';
-// Import image styles
-import { circleImage } from '../styles/common/images.css';
-// Import text styles
-import { sectionTitle, sectionSubTitle } from '../styles/common/texts.css';
-// Import button styles
-import { secondaryButton } from '../styles/common/buttons.css';
-// Import block styles
-import { aboutStyle } from '../styles/common/blocks.css';
-// Import Gulia photo
-import gulia from '../assets/gulia.jpg';
+import { Link, useLocation } from 'react-router-dom';
 
-const Services = () => (
-  <>
-    {/* Helmet component */}
-    <Helmet>
+// Import apiRequest utility function
+import { apiRequest } from '../utils/api';
+
+// Import styles
+import { circleImage } from '../styles/common/images.css';
+import { sectionTitle, sectionSubTitle } from '../styles/common/texts.css';
+import { secondaryButton } from '../styles/common/buttons.css';
+import { aboutStyle } from '../styles/common/blocks.css';
+
+/**
+ * Services page component
+ * @returns {JSX.Element} Services page content
+ */
+const Services = () => {
+  const [categories, setCategories] = useState([]); // Categories state
+  const location = useLocation();
+
+  // Fetch categories with services from the backend
+  useEffect(() => {
+    const fetchCategoriesWithServices = async () => {
+      try {
+        const response = await apiRequest('services', 'GET'); // Using apiRequest utility function
+        setCategories(response);
+      } catch (error) {
+        console.error('Error fetching categories with services:', error);
+      }
+    };
+
+    fetchCategoriesWithServices();
+  }, []);
+
+  // Scroll to service if anchor is in URL
+  useEffect(() => {
+    if (location.hash) {
+      const serviceElement = document.getElementById(location.hash.substring(1));
+      if (serviceElement) {
+        serviceElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location, categories]);
+
+  return (
+    <>
+      {/* Helmet component */}
+      <Helmet>
         {/* Page title */}
-        <title>About Us | Beauty by Gulia</title>
+        <title>Services | Beauty by Gulia</title>
         {/* Meta description */}
-        <meta name="description" content="Learn more about Gulia, the beauty therapist behind Beauty by Gulia. Find out what drives her passion for beauty treatments and how she helps her clients feel amazing." />
+        <meta name="description" content="Explore our wide range of beauty services offered by Beauty by Gulia. Find the perfect service to meet your beauty needs and book your spot today!" />
       </Helmet>
-    {/* Hero Section */}
-    <div className={`${aboutStyle} flex items-center justify-center text-white`}>
-    <div className="text-center relative z-10">
+
+      {/* Hero Section */}
+      <div className={`${aboutStyle} flex items-center justify-center text-white`}>
+        <div className="text-center relative z-10">
           {/* Hero subtitle */}
-          <h3 className="text-2xl font-normal pb-2">Discover the Beauty of You</h3>
+          <h1 className="text-2xl font-normal pb-2">Discover our Services</h1>
           {/* Hero title */}
           <h1 className="text-6xl font-bold">Where Passion Meets Care</h1>
-          {/* Hero CTA button */}
-          <Link to="/services">
-            <button className={`${secondaryButton} mt-6 text-lg font-bold h-12 px-20 py-2 rounded-full`}>Book a Spot</button>
-          </Link>
         </div>
-    </div>
+      </div>
 
-    {/* About Content */}
-    <section className="py-16">
-      <h1 className={sectionTitle}>The Face Behind the Beauty</h1>
-        <div className="flex flex-col items-center gap-8">
-          <div className={`${circleImage} w-80 h-80`}>
-            <img src={gulia} alt="Gulia" className="w-full h-full object-cover" />
-          </div>
-          <div className="text-center max-w-2xl">
-            <h2 className={sectionSubTitle}>Hello, I&apos;m Gulia!</h2>
-            <p>
-            I&apos;ve always felt that beauty is about more than just appearances — it&apos;s about feeling wonderful from the inside out.
-            I absolutely love what I do, and that passion drives me every day as I help my clients feel relaxed, confident, and radiant through body treatments, facials, waxing, and tinting.
-            Becoming a beauty therapist wasn&apos;t just a career choice; it was my soul&apos;s calling. Nothing makes me happier than creating a space where my clients can unwind and feel taken care of.
-            When I&apos;m not at my studio, you can usually find me practicing yoga or dreaming about my next adventure in India — a place that has captured my heart.
-            And above all, I love spending time with my two beautiful daughters, who inspire me every single day.
-            Summary: I&apos;m Gulia, a beauty therapist who loves making my clients feel amazing. Outside of work, I enjoy yoga, India, and my two wonderful daughters.
-            </p>
-          </div>
+      {/* Services Content */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          {/* Loop through categories */}
+          {categories.map((category) => (
+            <div key={category.id} className="mt-12">
+              {/* Anchor for scrolling */}
+              <div id={category.name.replace(/\s+/g, '-').toLowerCase()}></div>
+              <h3 className={sectionTitle}>{category.name}</h3>
+              {category.services.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-6">
+                  {/* Loop through services within each category */}
+                  {category.services.map((service) => (
+                    <div key={service.id} id={service.slug} className="text-center border border-gray-200 rounded-lg p-6">
+                      <Link to={`/services/${service.slug}`}>
+                        <div className={`${circleImage} mb-3`}>
+                          <img src={service.imageUrl} alt={service.name} className="w-full h-full object-cover" />
+                        </div>
+                        <h4 className={sectionSubTitle}>{service.name}</h4>
+                        <p className="mt-2 text-lg font-semibold">${service.price.toFixed(2)}</p>
+                        <button className={`${secondaryButton} mt-4 text-sm font-bold h-10 px-8 py-1 rounded-full`}>View Details</button>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4 text-center text-gray-500">This category currently has no services available.</p>
+              )}
+            </div>
+          ))}
         </div>
-    </section>
-  </>
-);
+      </section>
+    </>
+  );
+};
 
-// Export the About component
+// Export the Services component
 export default Services;

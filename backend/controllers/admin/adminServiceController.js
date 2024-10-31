@@ -1,9 +1,9 @@
 /*
-Version: 1.1
+Version: 1.2
 Controller functions for managing services in the admin dashboard.
 Only accessible to users with isAdmin = true.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 31/10/2024
 */
 
 // Import the Firebase Admin SDK
@@ -77,7 +77,7 @@ const createService = async (req, res) => {
   }
 
   // Destructure the request body
-  const { name, description, price, categoryId, isPublished = true, slug } = req.body;
+  let { name, description, price, categoryId, isPublished = true, slug } = req.body;
   // Get the image file from the request
   const imageFile = req.file;
 

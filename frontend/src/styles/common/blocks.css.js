@@ -1,13 +1,13 @@
 /*
-Version: 1.1
+Version: 1.2
 Block styles
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 29/10/2024
 */
 
 // Import the style function from vanilla-extract
 import { style } from '@vanilla-extract/css';
-// Import the theme variable raw valyes for hex manipulation
+// Import the theme variable raw values for hex manipulation
 import { brandColors } from '../abstracts/brandColors';
 // Import the theme variables
 import { themeVars } from '../theme.css';
@@ -21,7 +21,7 @@ const hexToRgba = (hex, alpha) => {
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
+};
 
 // Hero block style
 export const heroStyle = style({
@@ -83,12 +83,36 @@ export const contactStyle = style({
   },
 });
 
+// Section divider style
 export const sectionDivider = style({
   boxShadow: `0 5px 5px ${hexToRgba(brandColors.accent3, 0.3)} inset`,
 });
 
+// Dotted block style
 export const dottedBlock = style({
-    border: `2px dotted ${themeVars.color.accent1}`,
-    borderRadius: '50px',
-    padding: '30px',
+  border: `2px dotted ${themeVars.color.accent1}`,
+  borderRadius: '50px',
+  padding: '30px',
+});
+
+// Product page style
+export const productPageStyle = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});
+
+// Product image style
+export const productImageStyle = style({
+  maxWidth: '100%',
+  borderRadius: '15px',
+  boxShadow: `0 4px 8px ${hexToRgba(brandColors.accent3, 0.2)}`,
+});
+
+// Product info style
+export const productInfoStyle = style({
+  padding: '20px',
+  backgroundColor: themeVars.color.background,
+  borderRadius: '10px',
+  boxShadow: `0 4px 8px ${hexToRgba(brandColors.accent3, 0.1)}`,
 });

@@ -1,8 +1,8 @@
 /*
-Version: 1.4
+Version: 1.5
 Utility functions for authentication and secure API requests.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { jwtDecode } from "jwt-decode"; // Import the jwtDecode function from the jwt-decode library
@@ -37,7 +37,7 @@ export const setTokenChangeCallback = (callback) => {
  * Helper function to get stored tokens from local storage.
  * @returns {Object} - The stored tokens
  */
-const getStoredTokens = () => {
+export const getStoredTokens = () => {
   try {
     // Get the Access and Refresh tokens from local storage
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -56,7 +56,7 @@ const getStoredTokens = () => {
  * @param {Object} tokens - The tokens to store
  * @returns {Object} - The stored tokens
  */
-const storeTokens = (tokens) => {
+export const storeTokens = (tokens) => {
   try {
     // Store the Access and Refresh tokens in local storage
     localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
@@ -76,7 +76,7 @@ const storeTokens = (tokens) => {
  * Helper function to clear tokens from local storage.
  * @returns {void}
  */
-const clearTokens = () => {
+export const clearTokens = () => {
   try {
     // Clear the Access and Refresh tokens from local storage
     localStorage.removeItem(ACCESS_TOKEN_KEY);
@@ -186,6 +186,3 @@ export const apiSecureRequest = async (endpoint, method = 'GET', payload = {}, i
     throw error; // Re-throw other errors for generic handling
   }
 };
-
-// Export the storage functions for external use in the context provider
-export { getStoredTokens, storeTokens, clearTokens };

@@ -1,14 +1,15 @@
 /*
-Version: 1.3
+Version: 1.4
 Login page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { Helmet } from 'react-helmet-async'; // Import Helmet component
 import { useState } from 'react'; // Import the useState hook
 import { useNavigate, Link } from 'react-router-dom'; // Import the useNavigate hook from React Router
 import { ApiLogin } from '../api/auth'; // Import the ApiLogin function
+import useToast from '../hooks/useToast'; // Import the useToast hook
 import Logo from '../components/layout/Logo'; // Import the Logo component
 import useApiErrorHandler from '../hooks/useApiErrorHandler'; // Import the custom hook
 import useAuth from '../hooks/useAuth'; // Import the useAuth hook
@@ -25,6 +26,7 @@ const Login = () => {
   const [error, setError] = useState(''); // Declare the error state variable
   const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
   const { login } = useAuth(); // Get the login function from the useAuth hook
+  const { showToast } = useToast(); // Get the showToast function from the useToast hook
 
   // Get the error handler from the custom hook
   const handleApiError = useApiErrorHandler();
@@ -46,6 +48,9 @@ const Login = () => {
 
       // Call the login function from the AuthContext
       login(accessToken, refreshToken); 
+
+      // Show a success message
+      showToast('Welcome', 'You have been signed in', 'confirm');
 
       // Redirect to the home page after successful login
       navigate('/');

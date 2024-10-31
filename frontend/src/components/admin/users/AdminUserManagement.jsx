@@ -1,14 +1,15 @@
 /*
-Version: 1.4
+Version: 1.5
 Admin user management component
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import the useState and useEffect hooks from React
 import UserList from './UserList'; // Import the UserList component
 import UserForm from './UserForm'; // Import the UserForm component
 import { apiSecureRequest } from '../../../utils/auth'; // Import the apiSecureRequest function
+import useToast from '../../../hooks/useToast'; // Import the useToast hook
 
 /**
  * Admin user management component to manage users.
@@ -18,6 +19,7 @@ const AdminUserManagement = () => {
   const [users, setUsers] = useState([]); // List of users
   const [selectedUser, setSelectedUser] = useState(null); // User selected for editing
   const [isCreating, setIsCreating] = useState(false); // Flag for toggling create form
+  const { showToast } = useToast();
 
   // Function to fetch users from API
   const fetchUsers = async () => {
@@ -54,9 +56,11 @@ const AdminUserManagement = () => {
         delete formData.email;
         // Update user
         await apiSecureRequest(`admin/users/${selectedUser.email}`, 'PUT', formData);
+        showToast('User Updated', 'User details have been updated', 'confirm');
       } else {
         // Create new user
         await apiSecureRequest('admin/users', 'POST', formData);
+        showToast('User Created', 'A new user has been created', 'confirm');
       }
       // Refresh user list and reset form state
       fetchUsers();
@@ -64,6 +68,7 @@ const AdminUserManagement = () => {
       setIsCreating(false);
     } catch (error) {
       console.error('Failed to submit form:', error);
+      showToast('Error', `Failed to submit form: ${error.message?error.message:'An unknown error has occured'}`, 'error');
     }
   };
 
@@ -72,8 +77,10 @@ const AdminUserManagement = () => {
     try {
       await apiSecureRequest(`admin/users/${email}`, 'DELETE');
       fetchUsers();
+      showToast('User Deleted', 'The user has been deleted', 'confirm');
     } catch (error) {
       console.error('Failed to delete user:', error);
+      showToast('Error', `Failed to delete user: ${error.message?error.message:'An unknown error has occured'}`, 'error');
     }
   };
 

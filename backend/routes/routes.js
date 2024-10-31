@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Routes configuration file for importing and managing all application routes.
 Last edited by: Natalia Pakhomova
-Last edit date: 17/10/2024
+Last edit date: 31/10/2024
 */
 
 // Import the Express framework
@@ -15,6 +15,8 @@ const userRoutes = require('./userRoutes');
 const categoryRoutes = require('./categoryRoutes');
 // Import the service routes
 const serviceRoutes = require('./serviceRoutes');
+// Import the cart routes
+const cartRoutes = require('./cartRoutes');
 // Import the admin routes
 const adminRoutes = require('./adminRoutes');
 
@@ -29,6 +31,8 @@ router.use('/user', userRoutes);
 router.use('/categories', categoryRoutes);
 // Use service routes for all /api/services endpoints
 router.use('/services', serviceRoutes);
+// Use cart routes for all /api/cart endpoints
+router.use('/cart', cartRoutes);
 // Use admin routes for all /api/admin endpoints
 router.use('/admin', adminRoutes);
 

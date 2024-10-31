@@ -1,8 +1,8 @@
 /*
-Version: 1.2
+Version: 1.3
 Routes component for the frontend
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { Routes, Route } from 'react-router-dom'; // Import the Routes and Route components from React Router
@@ -11,7 +11,8 @@ import ProtectedRoute from './components/routes/ProtectedRoute'; // Import Prote
 import AdminRoute from './components/routes/AdminRoute'; // Import AdminRoute component
 import Home from './pages/Home'; // Import Home component
 import About from './pages/About'; // Import About component
-import Services from './pages/Services'; // Import Services component
+import Services from './pages/Services'; // Import Services List component
+import Service from './pages/Service'; // Import Service Detail component
 import Contact from './pages/Contact'; // Import Contact component
 // Import User routes
 import Login from './pages/Login'; // Import Login component
@@ -40,6 +41,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:slug" element={<Service />} />
         <Route path="/contact-us" element={<Contact />} />
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>

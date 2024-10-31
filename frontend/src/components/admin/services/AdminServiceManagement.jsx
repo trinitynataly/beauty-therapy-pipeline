@@ -1,14 +1,15 @@
 /*
-Version: 1.0
+Version: 1.1
 Admin service management component.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { useState, useEffect } from 'react'; // Import useState and useEffect from React
 import ServiceList from './ServiceList'; // Import ServiceList component
 import ServiceForm from './ServiceForm'; // Import ServiceForm component
 import { apiSecureRequest } from '../../../utils/auth'; // Import the apiSecureRequest function
+import useToast from '../../../hooks/useToast'; // Import the useToast hook
 
 /**
  * Admin service management component to manage services.
@@ -19,6 +20,7 @@ const AdminServiceManagement = () => {
   const [categories, setCategories] = useState([]); // List of categories
   const [selectedService, setSelectedService] = useState(null); // Service selected for editing
   const [isCreating, setIsCreating] = useState(false); // Flag for toggling create form
+  const { showToast } = useToast();
 
   // Function to fetch services from API
   const fetchServices = async () => {
@@ -51,14 +53,17 @@ const AdminServiceManagement = () => {
     try {
       if (selectedService) {
         await apiSecureRequest(`admin/services/${selectedService.id}`, 'PUT', formData, true);
+        showToast('Service Updated', 'Service details have been updated', 'confirm');
       } else {
         await apiSecureRequest('admin/services', 'POST', formData, true);
+        showToast('Service Created', 'A new service has been created', 'confirm');
       }
       fetchServices();
       setSelectedService(null);
       setIsCreating(false);
     } catch (error) {
       console.error('Failed to submit form:', error);
+      showToast('Error', `Failed to submit form: ${error.message ? error.message : 'An unknown error has occured'}`, 'error');
     }
   };
 
@@ -67,8 +72,10 @@ const AdminServiceManagement = () => {
     try {
       await apiSecureRequest(`admin/services/${id}`, 'DELETE');
       fetchServices();
+      showToast('Service Deleted', 'The service has been successfully deleted', 'confirm');
     } catch (error) {
       console.error('Failed to delete service:', error);
+      showToast('Error', `Failed to delete service: ${error.message ? error.message : 'An unknown error has occured'}`, 'error');
     }
   };
 

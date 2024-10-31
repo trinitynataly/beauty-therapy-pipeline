@@ -1,8 +1,8 @@
 /*
-Version: 1.2
+Version: 1.3
 Template Header component for the frontend layout.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 31/10/2024
 */
 
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
@@ -10,6 +10,7 @@ import { headerContainer, menuItem } from '../../styles/layout/header.css'; // I
 import { primaryButton, secondaryButton } from '../../styles/common/buttons.css';
 import Logo from './Logo'; // Import the Logo component
 import useAuth from '../../hooks/useAuth'; // Import the custom useAuth hook
+import useCart from '../../hooks/useCart'; // Import the custom useCart hook
 
 /**
  * Header component to display the site header.
@@ -17,6 +18,10 @@ import useAuth from '../../hooks/useAuth'; // Import the custom useAuth hook
  */
 const Header = () => {
   const { user, logout } = useAuth(); // Destructure user and logout function from context
+  const { cart } = useCart(); // Destructure cart and refreshCart function from context 
+
+  const countCart = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   // Return the JSX for the Header component
   return (
     <header className={`bg-white shadow-md p-4 ${headerContainer}`}>
@@ -38,14 +43,26 @@ const Header = () => {
         </nav>
 
         {/* Special Buttons */}
-        <div className="space-x-2">
+        <div>
           {user ? (
-            // Show logout button if user is authenticated
+            // Show logout button and cart icon if user is authenticated
             <>
-              <div>Hello, { user.firstName }!</div>
-              <button className={primaryButton} onClick={logout}>
-                Logout
-              </button>
+              <div className="text-lg font-medium">Hello, {user.firstName}!</div>
+              <div className="flex items-center gap-2 m-0">
+                <Link to="/cart">
+                  <button className={`${primaryButton} flex flex-row items-center`}>
+                    <i className="fas fa-shopping-cart text-sm"></i>
+                    {countCart > 0 && (
+                      <span className="text-white ml-2 text-md">
+                        {countCart}
+                      </span>
+                    )}
+                  </button>
+                </Link>
+                <button className={primaryButton} onClick={logout}>
+                  <i className="fas fa-sign-out-alt mr-1"></i> Exit
+                </button>
+              </div>
             </>
           ) : (
             // Show Sign Up and Login buttons if no user is authenticated
