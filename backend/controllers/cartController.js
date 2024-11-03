@@ -1,9 +1,9 @@
 /*
-Version: 1.0
+Version: 1.1
 Controller for handling cart-related operations.
 Allows users to add, update, and delete items from their cart.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 03/11/2024
 */
 
 // Import the Firestore instance
@@ -222,10 +222,24 @@ const getCartItems = async (req, res) => {
     const cartItems = [];
 
     // Loop through each cart item and add it to the array
-    cartSnapshot.forEach((doc) => {
-      // Add the cart item data to the array
-      cartItems.push({ id: doc.id, ...doc.data() });
-    });
+    for (const cartDoc of cartSnapshot.docs) {
+      const cartData = cartDoc.data();
+
+      // Get the service document to fetch service details
+      const serviceDoc = await db.collection('services').doc(cartData.serviceId).get();
+      if (serviceDoc.exists) {
+        const serviceData = serviceDoc.data();
+
+        // Add the cart item data to the array including service details
+        cartItems.push({
+          id: cartDoc.id,
+          ...cartData,
+          name: serviceData.name,
+          imageUrl: serviceData.imageUrl,
+          price: serviceData.price,
+        });
+      }
+    }
 
     // Return the list of cart items
     res.json(cartItems);

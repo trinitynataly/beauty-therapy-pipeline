@@ -1,9 +1,9 @@
 
 /*
-Version: 1.4
+Version: 1.5
 Login page for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/10/2024
+Last Edit Date: 03/11/2024
 */
 
 import { Helmet } from 'react-helmet-async'; // Import Helmet component
@@ -42,7 +42,7 @@ const schema = Joi.object({
     'string.email': 'Please provide a valid email address', // Error message for invalid email
   }),
   // Password field
-  password: Joi.string().min(6).required().messages({ // Password is required and must be at least 8 characters long
+  password: Joi.string().min(6).required().messages({ // Password is required and must be at least 6 characters long
     'string.empty': 'Password is required', // Error message for empty field
     'string.min': 'Password must be at least 6 characters long', // Error message for minimum length
   }),

@@ -1,8 +1,8 @@
 /*
-Version: 1.3
+Version: 1.4
 Template Header component for the frontend layout.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 03/11/2024
 */
 
 import { Link } from 'react-router-dom'; // Import the Link component from React Router
@@ -47,7 +47,7 @@ const Header = () => {
           {user ? (
             // Show logout button and cart icon if user is authenticated
             <>
-              <div className="text-lg font-medium">Hello, {user.firstName}!</div>
+              <div className="text-lg font-medium">Hello, <Link to="/profile">{user.firstName}</Link>!</div>
               <div className="flex items-center gap-2 m-0">
                 <Link to="/cart">
                   <button className={`${primaryButton} flex flex-row items-center`}>
@@ -66,14 +66,14 @@ const Header = () => {
             </>
           ) : (
             // Show Sign Up and Login buttons if no user is authenticated
-            <>
+            <div className="flex items-center gap-2 m-0">
               <Link to="/register">
                 <button className={primaryButton}>Sign Up</button>
               </Link>
               <Link to="/login">
                 <button className={secondaryButton}>Login</button>
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>

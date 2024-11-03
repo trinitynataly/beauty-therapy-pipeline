@@ -1,8 +1,8 @@
 /*
-Version: 1.5
+Version: 1.6
 AuthContext component for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 03/11/2024
 */
 
 import { createContext, useState, useEffect, useCallback } from 'react'; // Import createContext, useState, useEffect, and useCallback from React
@@ -88,14 +88,25 @@ const AuthProvider = ({ children }) => {
     clearTokens(); // Clear tokens
   };
 
+  /**
+   * Update user firstName and lastName from profile data.
+   * @param {object} profile - The user profile data.
+   * @returns {void}
+   */
+  const setUserFromPofile = (profile) => {
+    setUser((prevUser) => ({ ...prevUser, firstName: profile.firstName, lastName: profile.lastName }));
+  }
+
   // Create the context value object
   const contextValue = {
     user, // User information
     loading, // Loading state
     isAuthenticated: !!user, // Boolean to check if user is authenticated
-    setUser, // Function to set user information
+    setUser, // Function to set user information,
+    setUserFromPofile,
     login, // Function to log in
     logout, // Function to log out
+
   };
 
   // Return the AuthContext.Provider with the context value and child components

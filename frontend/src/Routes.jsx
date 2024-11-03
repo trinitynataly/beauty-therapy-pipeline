@@ -1,8 +1,8 @@
 /*
-Version: 1.3
+Version: 1.4
 Routes component for the frontend
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 03/11/2024
 */
 
 import { Routes, Route } from 'react-router-dom'; // Import the Routes and Route components from React Router
@@ -18,6 +18,7 @@ import Contact from './pages/Contact'; // Import Contact component
 import Login from './pages/Login'; // Import Login component
 import Register from './pages/Register'; // Import Register component
 import Profile from './pages/user/Profile'; // Import Profile component
+import Cart from './pages/user/Cart'; // Import Cart component
 
 // Import Admin routes
 import Admin from './pages/admin/Admin'; // Import Admin component
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
         {/* Admin routes */}
         <Route element={<AdminRoute />}>
