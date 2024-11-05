@@ -1,8 +1,8 @@
 /*
-Version: 1.2
+Version: 1.3
 App component for the frontend codebase.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 05/11/2024
 */
 
 import { BrowserRouter } from 'react-router-dom'; // Import the BrowserRouter component from React Router
@@ -14,10 +14,15 @@ import Routes from './Routes'; // Import the Routes component
 function App() { // Define the App component
   // Return the JSX for the App component with the BrowserRouter and AuthProvider components
   return ( 
+    // Wrap the application with the BrowserRouter component for routing functionality
     <BrowserRouter>
+      {/* Wrap the application with the ToastProvider component for toast notifications */}
       <ToastProvider>
+        {/* Wrap the application with the AuthProvider component for authentication */}
         <AuthProvider>
+          {/* Wrap the application with the CartProvider component for cart functionality */}
           <CartProvider>
+            {/* Render the Routes component */}
             <Routes />
           </CartProvider>
         </AuthProvider>

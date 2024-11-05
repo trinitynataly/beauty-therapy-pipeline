@@ -1,9 +1,8 @@
 /*
-Version: 1.1
-Controller for handling cart-related operations.
-Allows users to add, update, and delete items from their cart.
+Version: 1.2
+Controller for handling cart-related operations. Allows users to add, update, and delete items from their cart.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/11/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the Firestore instance
@@ -62,9 +61,9 @@ const addToCart = async (req, res) => {
 
     // Check if the item already exists in the user's cart
     const cartSnapshot = await db.collection('cart')
-      .where('userId', '==', userEmail)
-      .where('serviceId', '==', serviceId)
-      .get();
+      .where('userId', '==', userEmail) // Filter by user ID
+      .where('serviceId', '==', serviceId) // Filter by service ID
+      .get(); // Get the cart item
 
     // Check if the cart item already exists
     if (!cartSnapshot.empty) {
@@ -223,20 +222,23 @@ const getCartItems = async (req, res) => {
 
     // Loop through each cart item and add it to the array
     for (const cartDoc of cartSnapshot.docs) {
+      // Get the cart item data
       const cartData = cartDoc.data();
 
       // Get the service document to fetch service details
       const serviceDoc = await db.collection('services').doc(cartData.serviceId).get();
+      // Check if the service document exists
       if (serviceDoc.exists) {
+        // Read the service data
         const serviceData = serviceDoc.data();
 
         // Add the cart item data to the array including service details
         cartItems.push({
-          id: cartDoc.id,
-          ...cartData,
-          name: serviceData.name,
-          imageUrl: serviceData.imageUrl,
-          price: serviceData.price,
+          id: cartDoc.id, // Cart item ID
+          ...cartData, // Cart item data
+          name: serviceData.name, // Service name
+          imageUrl: serviceData.imageUrl, // Service image URL
+          price: serviceData.price, // Service price
         });
       }
     }

@@ -1,8 +1,8 @@
 /*
-Version: 1.1
+Version: 1.2
 Main entry point for the frontend codebase.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 15/10/2024
+Last Edit Date: 05/11/2024
 */
 
 import React from 'react'; // Import React
@@ -16,7 +16,9 @@ import './styles/global.css'; // Import the global styles
 
 // Render the App component to the root element
 ReactDOM.createRoot(document.getElementById('root')).render(
+  // Wrap the App component React.StrictMode for additional checks
   <React.StrictMode>
+    {/* Wrap the App component with the HelmetProvider for SEO */}
     <HelmetProvider>
       <App />
     </HelmetProvider>

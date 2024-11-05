@@ -1,8 +1,8 @@
 /*
-Version: 1.2
+Version: 1.3
 Block styles
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 29/10/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the style function from vanilla-extract
@@ -111,7 +111,6 @@ export const productImageStyle = style({
 
 // Product info style
 export const productInfoStyle = style({
-  padding: '20px',
   backgroundColor: themeVars.color.background,
   borderRadius: '10px',
   boxShadow: `0 4px 8px ${hexToRgba(brandColors.accent3, 0.1)}`,

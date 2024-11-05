@@ -1,8 +1,8 @@
 /*
-Version: 1.5
+Version: 1.6
 Admin user management component
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 31/10/2024
+Last Edit Date: 05/11/2024
 */
 
 import { useState, useEffect } from 'react'; // Import the useState and useEffect hooks from React
@@ -19,7 +19,7 @@ const AdminUserManagement = () => {
   const [users, setUsers] = useState([]); // List of users
   const [selectedUser, setSelectedUser] = useState(null); // User selected for editing
   const [isCreating, setIsCreating] = useState(false); // Flag for toggling create form
-  const { showToast } = useToast();
+  const { showToast } = useToast(); // Get the showToast function from the useToast hook
 
   // Function to fetch users from API
   const fetchUsers = async () => {
@@ -51,47 +51,59 @@ const AdminUserManagement = () => {
         delete formData.password;
       }
 
+      // Check if a user is selected
       if (selectedUser) {
         // Remove email field from form data
         delete formData.email;
         // Update user
         await apiSecureRequest(`admin/users/${selectedUser.email}`, 'PUT', formData);
+        // Show success message
         showToast('User Updated', 'User details have been updated', 'confirm');
       } else {
         // Create new user
         await apiSecureRequest('admin/users', 'POST', formData);
+        // Show success message
         showToast('User Created', 'A new user has been created', 'confirm');
       }
-      // Refresh user list and reset form state
+      // Refresh user list
       fetchUsers();
+      // Reset selected user and create flag
       setSelectedUser(null);
+      // Reset the create flag
       setIsCreating(false);
-    } catch (error) {
+    } catch (error) { // Catch any errors
+      // Log the error in the console
       console.error('Failed to submit form:', error);
-      showToast('Error', `Failed to submit form: ${error.message?error.message:'An unknown error has occured'}`, 'error');
+      // Show an error message
+      showToast('Error', `Failed to submit form: ${error?.message || 'An unknown error has occured'}`, 'error');
     }
   };
 
   // Function to handle user deletion
   const handleDeleteUser = async (email) => {
     try {
+      // Delete the user from the API
       await apiSecureRequest(`admin/users/${email}`, 'DELETE');
+      // Fetch users again
       fetchUsers();
+      // Show a success message
       showToast('User Deleted', 'The user has been deleted', 'confirm');
-    } catch (error) {
+    } catch (error) { // Catch any errors
+      // Log the error in the console
       console.error('Failed to delete user:', error);
-      showToast('Error', `Failed to delete user: ${error.message?error.message:'An unknown error has occured'}`, 'error');
+      // Show an error message
+      showToast('Error', `Failed to delete user: ${error?.message || 'An unknown error has occured'}`, 'error');
     }
   };
 
+  // Render the component
   return (
     <>
-
       {/* User List */}
       <UserList users={users} onEditUser={setSelectedUser} onDeleteUser={handleDeleteUser} />
-
-      {/* Create/Edit User Form */}
+      {/* Conditionally show Create/Edit User Form */}
       {selectedUser || isCreating ? (
+        // Show the UserForm component
         <UserForm
           user={selectedUser}
           onSubmit={handleFormSubmit}
@@ -101,6 +113,7 @@ const AdminUserManagement = () => {
           }}
         />
       ) : (
+        // Show the Create New User button
         <button
           className="mt-4 bg-primary text-white px-4 py-2 rounded"
           onClick={() => setIsCreating(true)}
@@ -112,4 +125,5 @@ const AdminUserManagement = () => {
   );
 };
 
+// Export the AdminUserManagement component
 export default AdminUserManagement;

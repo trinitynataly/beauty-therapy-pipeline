@@ -1,9 +1,9 @@
 /*
-Version: 1.1
+Version: 1.2
 Controller for handling public category-related operations.
 Allows unauthenticated users to list all categories.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the Firestore instance
@@ -21,10 +21,10 @@ const getAllCategories = async (req, res) => {
   try {
     // Get all published categories from the Firestore collection, sorted by sortOrder and then by name
     const snapshot = await db.collection('categories')
-      .where('isPublished', '==', true)
-      .orderBy('sortOrder')
-      .orderBy('name')
-      .get();
+      .where('isPublished', '==', true) // Only get published categories
+      .orderBy('sortOrder') // Sort by sortOrder
+      .orderBy('name') // Then sort by name
+      .get(); // Get the documents
 
     // Create an array to store the categories
     const categories = [];
@@ -33,9 +33,9 @@ const getAllCategories = async (req, res) => {
       const category = doc.data();
       // Add the category to the array
       categories.push({
-        id: doc.id,
-        name: category.name,
-        imageUrl: category.imageUrl,
+        id: doc.id, // Add the document ID as the category I
+        name: category.name, // Add the category name
+        imageUrl: category.imageUrl, // Add the category image URL
       });
     });
     // Send the array of categories as the response

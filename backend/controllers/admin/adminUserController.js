@@ -3,7 +3,7 @@ Version: 1.1
 Controller functions for managing users in the admin dashboard.
 Only accessible to users with isAdmin = true.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 16/09/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the Firestore instance
@@ -34,9 +34,9 @@ const getAllUsers = async (req, res) => {
       // Remove the password field before adding to the array
       user.password = '';
       // convert dob from Firestore Timestamp to string
-      if (user.dob) {
+      try {
         user.dob = user.dob.toDate().toISOString().split('T')[0];
-      } else {
+      } catch (error) {
         user.dob = '';
       }
       // Add the user to the array

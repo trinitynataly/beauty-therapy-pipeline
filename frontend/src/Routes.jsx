@@ -1,8 +1,8 @@
 /*
-Version: 1.4
+Version: 1.5
 Routes component for the frontend
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/11/2024
+Last Edit Date: 05/11/2024
 */
 
 import { Routes, Route } from 'react-router-dom'; // Import the Routes and Route components from React Router
@@ -35,26 +35,26 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* Unwrapped routes for login and register */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} /> {/* Login route */}
+      <Route path="/register" element={<Register />} /> {/* Register route */}
       {/* Wrap all other routes with Layout */}
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/services/:slug" element={<Service />} />
-        <Route path="/contact-us" element={<Contact />} />
+        <Route path="/" element={<Home />} /> {/* Home route */}
+        <Route path="/about" element={<About />} /> {/* About route */}
+        <Route path="/services" element={<Services />} /> {/* Services route */}
+        <Route path="/services/:slug" element={<Service />} /> {/* Service detail route */}
+        <Route path="/contact-us" element={<Contact />} /> {/* Contact route */}
         {/* Protected routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/cart" element={<Cart />} />
+        <Route element={<ProtectedRoute />}> {/* Protected route wrapper */}
+          <Route path="/profile" element={<Profile />} /> {/* Profile route */}
+          <Route path="/cart" element={<Cart />} /> {/* Cart route */}
         </Route>
         {/* Admin routes */}
-        <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/categories" element={<Categories />} />
-          <Route path="/admin/services" element={<ServicesAdmin />} />
+        <Route element={<AdminRoute />}> {/* Admin route wrapper */}
+          <Route path="/admin" element={<Admin />} /> {/* Admin dashboard route */}
+          <Route path="/admin/users" element={<Users />} /> {/* Users route */}
+          <Route path="/admin/categories" element={<Categories />} /> {/* Categories route */}
+          <Route path="/admin/services" element={<ServicesAdmin />} /> {/* Services route */}
         </Route>
         {/* 404 route */}
         <Route path="*" element={<NotFound />} />

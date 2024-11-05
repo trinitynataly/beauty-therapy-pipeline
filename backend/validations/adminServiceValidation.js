@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Validation schema for managing services in the admin dashboard.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 17/10/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the Joi module for data validation
@@ -30,6 +30,7 @@ const validateService = (data, isUpdate = false) => {
     ? Joi.object(schema).fork(Object.keys(schema), (field) => field.optional())
     : Joi.object(schema);
 
+    // Return the validation result
   return validationSchema.validate(data);
 };
 

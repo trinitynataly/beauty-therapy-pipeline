@@ -1,8 +1,8 @@
 /*
-Version: 1.0
+Version: 1.1
 Template Layout component for the frontend.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 03/09/2024
+Last Edit Date: 05/11/2024
 */
 
 import { Outlet } from 'react-router-dom'; // Import the Outlet component from React Router
@@ -16,10 +16,14 @@ import Footer from './Footer'; // Import the Footer component
 const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Header component */}
       <Header />
+      {/* Main content */}
       <main className="flex-grow">
+        {/* Outlet for nested routes */}
         <Outlet />
       </main>
+      {/* Footer component */}
       <Footer />
     </div>
   );

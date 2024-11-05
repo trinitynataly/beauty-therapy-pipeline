@@ -28,7 +28,6 @@ const useApiErrorHandler = () => {
           navigate('/login');
         }
       }
-      // You can add more error types here as needed
     },
     [navigate] // Add navigate to the dependencies array
   );

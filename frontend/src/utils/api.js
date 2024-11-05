@@ -38,8 +38,9 @@ export const apiRequest = async (endpoint, method = 'GET', payload = {}, headers
   } catch (error) {
     // Check if it's an Axios error and has a response
     if (axios.isAxiosError(error) && error.response) {
-      // Attach the response data and status to the error for higher-level handling
+      // Attach the response data to the error for higher-level handling
       error.message = error.response.data.error || 'An error occurred';
+      // Attach the status code to the error
       error.status = error.response.status;
     }
     throw error; // Rethrow the modified error

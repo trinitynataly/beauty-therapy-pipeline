@@ -1,21 +1,22 @@
 /*
-Version: 1.0
+Version: 1.1
 Routes for managing users within the admin dashboard.
 Only accessible to admin-enabled users.
 Last Edited by: Natalia Pakhomova
-Last Edit Date: 10/09/2024
+Last Edit Date: 05/11/2024
 */
 
 // Import the Express framework
 const express = require('express');
 // Import the admin user controller functions
 const {
-  getAllUsers,
-  createUser,
-  updateUser,
-  deleteUser,
+  getAllUsers, // Get all users
+  createUser, // Create a new user
+  updateUser, // Update a user by email
+  deleteUser, // Delete a user by email
 } = require('../../controllers/admin/adminUserController');
 
+// Create a new Express router
 const router = express.Router();
 
 // Define the routes for admin user management

@@ -1,8 +1,8 @@
 /*
-Version: 1.3
-Last edited by: Natalia Pakhomova
-Last edit date: 03/11/2024
+Version: 1.4
 Controller functions for managing user data, including fetching the current user's profile.
+Last edited by: Natalia Pakhomova
+Last edit date: 05/11/2024
 */
 
 // Import the Firestore instance
@@ -56,29 +56,32 @@ const editProfile = async (req, res) => {
 
     // Create an object with the updated fields
     const updatedProfile = {
-      firstName,
-      lastName,
-      dob,
-      gender,
-      phone,
-      address: { street, suburb, postcode, state, country },
-      updatedAt: new Date().toISOString(),
+      firstName, // Update the first name
+      lastName, // Update the last name
+      dob, // Update the date of birth
+      gender, // Update the gender
+      phone,  // Update the phone number
+      address: { street, suburb, postcode, state, country }, // Update the address object
+      updatedAt: new Date().toISOString(), // Update the updated timestamp
     };
 
     // Remove any undefined fields
     Object.keys(updatedProfile).forEach(key => {
-      if (updatedProfile[key] === undefined) {
-        delete updatedProfile[key];
+      if (updatedProfile[key] === undefined) { // Check if the field is undefined
+        delete updatedProfile[key]; // Delete the field from the object
       }
     });
 
-    // Update the user document in Firestore
+    // Get the user document from Firestore by email
     const userRef = db.collection('users').doc(userEmail);
+    // Update the user profile data in Firestore
     await userRef.update(updatedProfile);
 
     // Get the updated user profile
     const updatedUserDoc = await userRef.get();
+    // Get the updated user profile data
     const updatedUserProfile = updatedUserDoc.data();
+    // Remove the password field from the user profile data if it exists
     delete updatedUserProfile.password;
 
     // Return the updated user profile data
@@ -104,21 +107,26 @@ const changePassword = async (req, res) => {
 
     // Check if both passwords are provided
     if (!currentPassword || !newPassword) {
+      // Return an error if either password is missing
       return res.status(400).json({ error: 'Both current and new passwords are required.' });
     }
 
     // Get the user document from Firestore
     const userRef = db.collection('users').doc(userEmail);
+    // Get the user data
     const userDoc = await userRef.get();
 
     // Check if the user exists
     if (!userDoc.exists) {
+      // Return an error if the user is not found
       return res.status(400).json({ error: 'User not found' });
     }
 
     // Verify the current password
     const user = userDoc.data();
+    // Check if the current password is valid
     const isPasswordValid = await verifyPassword(currentPassword, user.password);
+    // Return an error if the current password is incorrect
     if (!isPasswordValid) {
       return res.status(400).json({ error: 'Current password is incorrect.' });
     }
@@ -128,8 +136,8 @@ const changePassword = async (req, res) => {
 
     // Update the user's password in Firestore
     await userRef.update({
-      password: hashedNewPassword,
-      updatedAt: new Date().toISOString(),
+      password: hashedNewPassword, // Update the password field
+      updatedAt: new Date().toISOString(), // Update the updated timestamp
     });
 
     // Return a success message

@@ -12,7 +12,7 @@ const db = admin.firestore();
 // Import the authentication helper functions
 const { generateTokens, verifyPassword, verifyToken, hashPassword } = require('../utils/auth');
 // Import the authentication validation schemas
-const { registerSchema, loginSchema } = require('../validations');
+const { registerSchema, loginSchema } = require('../validations/authValidation');
 
 /**
  * Register a new user with email and password.

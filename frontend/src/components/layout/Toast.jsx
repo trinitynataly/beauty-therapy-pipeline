@@ -1,12 +1,10 @@
 /*
-Version: 1.0
+Version: 1.1
 Last edited by: Natalia Pakhomova
-Last edit date: 31/10/2024
+Last edit date: 05/11/2024
 A toast component for the application layout displaying the notification message.
 */
 
-// Import the Fragment component from React
-import { Fragment } from 'react';
 // Import PropTypes library for function argument validation
 import PropTypes from 'prop-types';
 
@@ -29,7 +27,7 @@ const Toast = ({ title, text, type }) => {
 
   // Return the notification message with title and text
   return (
-    <Fragment>
+    <>
       {/* Notification message with title and text */}
       <div className={`fixed bottom-4 right-4 p-4 rounded-lg shadow-lg ${typeStyles[type]} text-white`}>
         {/* Title of the notification message */}
@@ -37,7 +35,7 @@ const Toast = ({ title, text, type }) => {
         {/* Text of the notification message */}
         <p>{text}</p>
       </div>
-    </Fragment>
+    </>
   );
 };
 
