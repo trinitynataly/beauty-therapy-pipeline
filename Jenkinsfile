@@ -34,14 +34,17 @@ pipeline {
     }
 
     stage('Code Quality') {
-  steps {
-    sh '''
-      cd backend
-      npm ci || npm install
-      npm run lint || true
-    '''
-  }
+      steps {
+        sh '''
+          cd backend
+          npm ci || npm install
+          npm run lint
+          npm run lint:report || true
+        '''
+        archiveArtifacts artifacts: 'backend/eslint-report.json', allowEmptyArchive: true
+      }
 }
+
 
     stage('Security') {
       steps {
