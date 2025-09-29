@@ -66,10 +66,17 @@ pipeline {
         sh '''
           rm -rf deploy && mkdir -p deploy
           tar -xzf artifact-backend-${BUILD_NUMBER}.tar.gz -C deploy
-          ls -la deploy/backend
+
+          # smoke check: key files exist after "deployment"
+          test -f deploy/backend/package.json
+          test -f deploy/backend/server.js
+
+          echo "Deployed to local staging directory: $(pwd)/deploy"
+          ls -la deploy/backend | head -n 50
         '''
       }
 }
+
 
 
     stage('Release') {
