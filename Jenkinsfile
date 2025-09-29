@@ -48,9 +48,15 @@ pipeline {
 
     stage('Security') {
       steps {
-        echo 'Security'
+        sh '''
+          cd backend
+          npm ci || npm install
+          npm audit --production --json > audit-report.json || true
+        '''
+        archiveArtifacts artifacts: 'backend/audit-report.json', allowEmptyArchive: true
       }
-    }
+}
+
 
     stage('Deploy') {
       steps {
