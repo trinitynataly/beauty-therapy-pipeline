@@ -6,6 +6,12 @@ pipeline {
   }
 
   stages {
+    stage('Env Check') {
+      steps {
+        sh 'node -v && npm -v'
+      }
+    }
+
     stage('Build') {
       steps {
         echo 'Build'
@@ -14,7 +20,11 @@ pipeline {
 
     stage('Test') {
       steps {
-        echo 'Test'
+        sh '''
+          cd backend
+          npm ci || npm install
+          npm run test
+        '''
       }
       post {
         always {
