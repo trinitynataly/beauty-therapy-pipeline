@@ -14,9 +14,14 @@ pipeline {
 
     stage('Build') {
       steps {
-        echo 'Build'
+        sh '''
+          rm -f artifact-backend-${BUILD_NUMBER}.zip
+          zip -r artifact-backend-${BUILD_NUMBER}.zip backend -x "backend/node_modules/*"
+        '''
+        archiveArtifacts artifacts: 'artifact-backend-*.zip', onlyIfSuccessful: true
       }
-    }
+}
+
 
     stage('Test') {
       steps {
@@ -56,7 +61,6 @@ pipeline {
         archiveArtifacts artifacts: 'backend/audit-report.json', allowEmptyArchive: true
       }
 }
-
 
     stage('Deploy') {
       steps {
