@@ -15,13 +15,12 @@ pipeline {
     stage('Build') {
       steps {
         sh '''
-          rm -f artifact-backend-${BUILD_NUMBER}.zip
-          zip -r artifact-backend-${BUILD_NUMBER}.zip backend -x "backend/node_modules/*"
+          rm -f artifact-backend-${BUILD_NUMBER}.tar.gz
+          tar --exclude='backend/node_modules' -czf artifact-backend-${BUILD_NUMBER}.tar.gz backend
         '''
-        archiveArtifacts artifacts: 'artifact-backend-*.zip', onlyIfSuccessful: true
+        archiveArtifacts artifacts: 'artifact-backend-*.tar.gz', onlyIfSuccessful: true
       }
 }
-
 
     stage('Test') {
       steps {
