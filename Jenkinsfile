@@ -34,10 +34,14 @@ pipeline {
     }
 
     stage('Code Quality') {
-      steps {
-        echo 'Code Quality'
-      }
-    }
+  steps {
+    sh '''
+      cd backend
+      npm ci || npm install
+      npm run lint || true
+    '''
+  }
+}
 
     stage('Security') {
       steps {
