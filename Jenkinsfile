@@ -77,13 +77,27 @@ pipeline {
       }
 }
 
-
-
     stage('Release') {
       steps {
-        echo 'Release'
+        sh '''
+          rm -rf prod && mkdir -p prod
+          cp -r deploy/backend prod/backend
+
+          COMMIT=$(git rev-parse --short HEAD || echo "unknown")
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          cat > release_notes_${BUILD_NUMBER}.md <<EOF
+    # Release ${BUILD_NUMBER}
+    Commit: ${COMMIT}
+    Date (UTC): ${DATE}
+    Artifact: artifact-backend-${BUILD_NUMBER}.tar.gz
+    Action: Promoted from deploy/ (staging) to prod/ (production)
+    EOF
+        '''
+        archiveArtifacts artifacts: 'release_notes_*.md', onlyIfSuccessful: true
       }
-    }
+}
+
 
     stage('Monitoring') {
       steps {
