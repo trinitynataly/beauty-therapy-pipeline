@@ -101,9 +101,15 @@ pipeline {
 
     stage('Monitoring') {
       steps {
-        echo 'Monitoring'
+        sh '''
+          CRIT=$(node -e "const fs=require('fs');const p='prod/backend/audit-report.json';if(!fs.existsSync(p)){console.log(0);process.exit(0)}const j=JSON.parse(fs.readFileSync(p,'utf8'));let c=0;(j.auditAdvisories?Object.values(j.auditAdvisories):[]).forEach(a=>{if(a.severity==='critical')c++});console.log(c);")
+          WARN=$(node -e "const fs=require('fs');const p='prod/backend/eslint-report.json';if(!fs.existsSync(p)){console.log(0);process.exit(0)}const arr=JSON.parse(fs.readFileSync(p,'utf8'));const w=arr.reduce((s,f)=>s+(f.warningCount||0),0);console.log(w);")
+          echo "Monitoring summary -> critical_vulnerabilities: $CRIT, eslint_warnings: $WARN" | tee monitoring_summary.txt
+        '''
+        archiveArtifacts artifacts: 'monitoring_summary.txt', onlyIfSuccessful: true
       }
-    }
+  }
+
   }
 
   post {
