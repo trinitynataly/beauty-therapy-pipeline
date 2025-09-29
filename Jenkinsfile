@@ -2,7 +2,6 @@ pipeline {
   agent any
 
   options {
-    ansiColor('xterm')
     timestamps()
   }
 
@@ -37,7 +36,9 @@ pipeline {
     }
 
     stage('Deploy') {
-      when { branch 'main' }
+      when {
+        branch 'main'
+      }
       steps {
         echo 'Deploy'
       }
@@ -57,8 +58,14 @@ pipeline {
   }
 
   post {
-    always { echo 'Pipeline finished' }
-    success { echo 'Success' }
-    failure { echo 'Failed' }
+    always {
+      echo 'Pipeline finished'
+    }
+    success {
+      echo 'Success'
+    }
+    failure {
+      echo 'Failed'
+    }
   }
 }
