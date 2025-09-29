@@ -63,9 +63,14 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        echo 'Deploy'
+        sh '''
+          rm -rf deploy && mkdir -p deploy
+          tar -xzf artifact-backend-${BUILD_NUMBER}.tar.gz -C deploy
+          ls -la deploy/backend
+        '''
       }
-    }
+}
+
 
     stage('Release') {
       steps {
